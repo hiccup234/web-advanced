@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0"
+		 xmlns="http://java.sun.com/xml/ns/javaee"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+	<display-name>mvc-test</display-name>
+
+	<!--注册中央调度器-->
+	<servlet>
+		<servlet-name>hiccupMVC</servlet-name>
+		<servlet-class>com.hiccup.springframework.mvc.DispatcherServlet</servlet-class>
+		<!--指定MVC配置文件位置及文件名，通过ServletConfig来接收-->
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:web-context.xml</param-value>
+		</init-param>
+		<init-param>
+			<param-name>propertiesLocation</param-name>
+			<param-value>application.properties</param-value>
+		</init-param>
+		<!--这里配置大于0的数，越小优先级越高-->
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>hiccupMVC</servlet-name>
+		<!--拦截所有请求（不要配/*：会拦截动态请求）（/：会拦截静态资源请求）-->
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
+</web-app>
