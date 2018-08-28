@@ -5,7 +5,7 @@ import com.hiccup.mvc.annotation.Controller;
 import com.hiccup.mvc.annotation.RequestParam;
 
 /**
- * F
+ * 测试Controller类
  *
  * @author wenhy
  * @date 2018/8/22
