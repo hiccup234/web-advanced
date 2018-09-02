@@ -20,7 +20,7 @@ import java.util.*;
 
 /**
  * SpringMVC本质上是一个Servlet，继承自HttpServlet。
- * FrameworkServlet负责初始化SpringMVC的IOC容器
+ * FrameworkServlet负责初始化SpringMVC的IOC容器（父子容器关系中的子容器，父容器一般为ContextLoaderListener启动的容器）
  *
  * ⑴ 用户发送请求至前端控制器DispatcherServlet
  * ⑵ DispatcherServlet收到请求调用HandlerMapping处理器映射器
