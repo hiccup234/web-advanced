@@ -1,4 +1,4 @@
-package com.hiccup.test;
+package com.hiccup.spring.ext.test;
 
 import com.hiccup.mvc.annotation.RequestMapping;
 import com.hiccup.mvc.annotation.Controller;

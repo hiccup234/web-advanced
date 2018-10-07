@@ -9,7 +9,7 @@
 	<!--注册中央调度器-->
 	<servlet>
 		<servlet-name>hiccupMVC</servlet-name>
-		<servlet-class>com.hiccup.springframework.mvc.DispatcherServlet</servlet-class>
+		<servlet-class>com.hiccup.mvc.DispatcherServlet</servlet-class>
 		<!--指定MVC配置文件位置及文件名，通过ServletConfig来接收-->
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
