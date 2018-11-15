@@ -4,12 +4,12 @@
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
-	<display-name>mvc-test</display-name>
+	<display-name>mvc</display-name>
 
 	<!--注册中央调度器-->
 	<servlet>
 		<servlet-name>hiccupMVC</servlet-name>
-		<servlet-class>com.hiccup.mvc.DispatcherServlet</servlet-class>
+		<servlet-class>top.hiccup.mvc.DispatcherServlet</servlet-class>
 		<!--指定MVC配置文件位置及文件名，通过ServletConfig来接收-->
 		<init-param>
 			<param-name>contextConfigLocation</param-name>

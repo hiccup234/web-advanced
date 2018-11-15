@@ -1,4 +1,4 @@
-package top.hiccup.mvc.controller;
+package top.hiccup.controller;
 
 import top.hiccup.mvc.annotation.RequestMapping;
 import top.hiccup.mvc.annotation.Controller;

@@ -92,10 +92,10 @@ public class DispatcherServlet extends HttpServlet {
         ServletContext servletContext = servletConfig.getServletContext();
         System.out.println(servletContext);
         System.out.println(this);
-        if (count < 5) {
-            count++;
-            throw new RuntimeException("假装启动失败..");
-        }
+//        if (count < 5) {
+//            count++;
+//            throw new RuntimeException("假装启动失败..");
+//        }
 
         // 1.加载web.xml中指定的配置文件
         doLoadConfig(servletConfig.getInitParameter("propertiesLocation"));
