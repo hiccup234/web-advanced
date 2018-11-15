@@ -1,4 +1,4 @@
-package com.hiccup.mvc.annotation;
+package top.hiccup.mvc.annotation;
 
 import java.lang.annotation.*;
 

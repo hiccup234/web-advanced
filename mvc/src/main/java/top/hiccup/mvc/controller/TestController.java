@@ -1,8 +1,8 @@
-package com.hiccup.spring.ext.test;
+package top.hiccup.mvc.controller;
 
-import com.hiccup.mvc.annotation.RequestMapping;
-import com.hiccup.mvc.annotation.Controller;
-import com.hiccup.mvc.annotation.RequestParam;
+import top.hiccup.mvc.annotation.RequestMapping;
+import top.hiccup.mvc.annotation.Controller;
+import top.hiccup.mvc.annotation.RequestParam;
 
 /**
  * 测试Controller类
