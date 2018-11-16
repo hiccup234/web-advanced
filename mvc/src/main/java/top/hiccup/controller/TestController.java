@@ -10,11 +10,11 @@ import top.hiccup.mvc.annotation.RequestParam;
  * @author wenhy
  * @date 2018/8/22
  */
-@RequestMapping("test")
+@RequestMapping("/test")
 @Controller
 public class TestController {
 
-    @RequestMapping(value = "query")
+    @RequestMapping(value = "/query")
     public String query(@RequestParam String req) {
         return "hahaha";
     }
