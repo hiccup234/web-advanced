@@ -16,6 +16,8 @@ public class TestController {
 
     @RequestMapping(value = "/query")
     public String query(@RequestParam String req) {
+        String str = "Hello World";
+        str.hashCode();
         return "hahaha";
     }
 

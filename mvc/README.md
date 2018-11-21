@@ -3,5 +3,4 @@
 
 桥接 Spring MVC 与 Stripes MVC
 
-#rpc
-简易RPC框架
+
