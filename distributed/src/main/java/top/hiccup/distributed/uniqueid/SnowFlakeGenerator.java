@@ -1,51 +1,30 @@
-package top.hiccup;
-
-import java.util.UUID;
+package top.hiccup.distributed.uniqueid;
 
 /**
- * 全局唯一ID：
+ * 雪花算法：最初由Twitter开源（Scala语言），2010停止维护
  * <p>
- * 1、UUID：无序，不能保证递增，采用字符存储，查询传输慢
- * <p>
- * 2、snowflake算法：twitter分布式主键ID生成算法，无序且强依赖时钟，多台服务器时钟要同步
- *          1bit+41bit+10bit+12bit=64bit
- *          固定0（为1的话则生成的ID都是负数了）+毫秒数（2^41-1毫秒， z约69年）+机器码（数据中心+机器ID）+流水号
- *
- * 3、MySql自增主键：假设有100台MySql数据库，则自增步长设置为100，可扩展性非常差
- *          如库A的id=100，200，300 库B的id=101，201，301
- * <p>
- * 4、
+ * 基于Java实现
  *
  * @author wenhy
- * @date 2019/1/13
+ * @date 2019/1/21
  */
-public class UniqueIdTest {
-
-    public static String test1() {
-        return UUID.randomUUID().toString();
-    }
-
-    public static long test2() {
-        SnowFlakeGenerator generator = new SnowFlakeGenerator.Factory().create(234001L, 1L);
-        return generator.nextId();
-    }
-
-    public static void main(String[] args) {
-        System.out.println(System.currentTimeMillis());
-    }
-}
-
-class SnowFlakeGenerator {
+public class SnowFlakeGenerator {
 
     /**
      * 某个固定的时间
      */
     private final static long START_STAMP = 1547431170362L;
     /**
-     * 可分配的位数(10位机器码+12位序列号)
+     * 可分配的位数：10位机器码+12位序列号（固定的）
      */
     private final static int REMAIN_BIT_NUM = 22;
+    /**
+     * IDC机房编号
+     */
     private long idcId;
+    /**
+     * IDC机房中机器编号
+     */
     private long machineId;
     /**
      * 当前序列号
@@ -56,19 +35,19 @@ class SnowFlakeGenerator {
      */
     private long lastStamp = -1L;
     /**
-     * 时间戳偏移量：一次计算出，避免重复计算
+     * 时间戳偏移量（初始化时计算）
      */
     private int timestampBitLeftOffset;
     /**
-     * idc偏移量：一次计算出，避免重复计算
+     * idc偏移量（初始化时计算）
      */
     private int idcBitLeftOffset;
     /**
-     * 机器id偏移量：一次计算出，避免重复计算
+     * 机器id偏移量（初始化时计算）
      */
     private int machineBitLeftOffset;
     /**
-     * 最大序列值：一次计算出，避免重复计算
+     * 最大序列值（初始化时计算）
      */
     private int maxSequenceValue;
 
@@ -90,11 +69,11 @@ class SnowFlakeGenerator {
         if (currentStamp < lastStamp) {
             throw new RuntimeException(String.format("Clock moved backwards. Refusing to generate id for %d milliseconds", lastStamp - currentStamp));
         }
-        //新的毫秒，序列从0开始，否则序列自增
+        // 新的毫秒，序列从0开始，否则序列自增
         if (currentStamp == lastStamp) {
             sequence = (sequence + 1) & this.maxSequenceValue;
             if (sequence == 0L) {
-                //Twitter源代码中的逻辑是循环，直到下一个毫秒
+                // Twitter源代码中的逻辑是循环，直到下一个毫秒
                 lastStamp = tilNextMillis();
 //                throw new IllegalStateException("sequence over flow");
             }
@@ -130,6 +109,7 @@ class SnowFlakeGenerator {
             this.idcBitNum = DEFAULT_IDC_BIT_NUM;
             this.machineBitNum = DEFAULT_MACHINE_BIT_NUM;
         }
+
         public Factory(int machineBitNum, int idcBitNum) {
             this.idcBitNum = idcBitNum;
             this.machineBitNum = machineBitNum;
