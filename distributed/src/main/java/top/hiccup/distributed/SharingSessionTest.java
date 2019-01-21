@@ -2,6 +2,7 @@ package top.hiccup.distributed;
 
 /**
  * 【分布式Session共享解决方案】
+ *
  * 1、session复制：直接利用web容器的session复制功能，在集群中的几台服务器之间同步session对象，使得每台服务器上都保存所有的session信息，
  * 这样任何一台宕机都不会导致session的数据丢失，服务器使用session时，直接从本地获取。
  *
