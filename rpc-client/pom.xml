@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>top.hiccup</groupId>
-    <artifactId>rpc</artifactId>
+    <artifactId>rpc-client</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     
