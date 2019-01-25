@@ -7,7 +7,7 @@
     <groupId>top.hiccup</groupId>
     <artifactId>ratel-im</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <spring.version>4.3.10.RELEASE</spring.version>
@@ -27,7 +27,6 @@
             <artifactId>lombok</artifactId>
             <version>1.16.16</version>
         </dependency>
-
 
 
         <dependency>
@@ -91,10 +90,6 @@
         </dependency>
 
 
-
-
-
-
         <!--Simple Logging Facade for Java-->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -121,6 +116,7 @@
     </dependencies>
 
     <build>
+        <finalName>ratel-im</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -130,6 +126,60 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <finalName>${project.artifactId}</finalName>
+                    <!--<includes>-->
+                    <!--&lt;!&ndash;打jar包只打这两个目录，其他配置文件不用打在jar里&ndash;&gt;-->
+                    <!--<include>/top/**</include>-->
+                    <!--<include>/META-INF/**</include>-->
+                    <!--</includes>-->
+                    <archive>
+                        <manifest>
+                            <mainClass>
+                                top.hiccup.ratel.im.websocket.jetty.JettyServerBootStrap
+                            </mainClass>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>top.hiccup.ratel.im.websocket.jetty.JettyServerBootStrap</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>assembly</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

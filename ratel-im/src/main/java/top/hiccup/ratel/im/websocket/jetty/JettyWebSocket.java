@@ -1,11 +1,13 @@
 package top.hiccup.ratel.im.websocket.jetty;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.WebSocketListener;
+
 
 /**
  * F
@@ -32,15 +34,29 @@ public class JettyWebSocket implements WebSocketListener {
 
     @Override
     public void onWebSocketBinary(byte[] bytes, int i, int i1) {
-
+        System.out.println("服务器收到二进制文件");
+        //群发消息
+        for (JettyWebSocket socket : webSocketMap.values()) {
+            try {
+                ByteBuffer byteBuffer = ByteBuffer.allocate(bytes.length);
+                byteBuffer.put(bytes);
+                socket.session.getRemote().sendBytes(byteBuffer);
+            } catch (IOException e) {
+                e.printStackTrace();
+                continue;
+            }
+        }
     }
 
     @Override
     public void onWebSocketClose(int i, String s) {
-        webSocketMap.remove(this);
         // 在线数减1
         subOnlineCount();
-        System.out.println("客户端下线" + getOnlineCount());
+        JettyWebSocket socket = webSocketMap.remove(this);
+        System.out.println("客户端下线，当前在线人数：" + getOnlineCount());
+
+        String message = "{\"message\":\"webSocket close!\"}";
+        sendMessageToAll(message);
     }
 
     @Override
@@ -48,7 +64,10 @@ public class JettyWebSocket implements WebSocketListener {
         this.session = session;
         webSocketMap.put(this, this);
         addOnlineCount();
-        System.out.println("客户端上线" + getOnlineCount());
+        System.out.println("客户端上线，当前在线人数：" + getOnlineCount());
+
+        String message = "{\"message\":\"websocket open!\"}";
+        sendMessageToAll(message);
     }
 
     @Override
@@ -59,8 +78,8 @@ public class JettyWebSocket implements WebSocketListener {
     @Override
     public void onWebSocketText(String msg) {
         System.out.println("服务器收到消息：" + msg);
-        //群发消息
-        for(JettyWebSocket item: webSocketMap.values()){
+        // 群发消息
+        for (JettyWebSocket item : webSocketMap.values()) {
             try {
                 item.sendMessage(msg);
             } catch (IOException e) {
@@ -73,6 +92,16 @@ public class JettyWebSocket implements WebSocketListener {
     private void sendMessage(String message) throws IOException {
         this.session.getRemote().sendString(message);
         //this.session.getAsyncRemote().sendText(message);
+    }
+
+    private void sendMessageToAll(String message) {
+        for (JettyWebSocket item : webSocketMap.values()) {
+            try {
+                item.sendMessage(message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private static synchronized int getOnlineCount() {

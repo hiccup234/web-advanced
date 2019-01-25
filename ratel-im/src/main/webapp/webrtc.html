@@ -2,19 +2,20 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>WebRTC</title>
+    <title>ratel-im</title>
     <meta http-equiv="X-UA-Compatible" content="chrome=1"/>
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="canonical" href="."/>
-    <link rel="alternate icon" type="image/png"
-          href="assets/i/favicon.png">
+    <link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
+
     <link rel="stylesheet" href="assets/css/amazeui.min.css"/>
     <link rel="stylesheet" href="assets/css/app.css"/>
+
     <style type="text/css">
         html, body {
-            background-color: #000000;
+            /*background-color: #000000;*/
             height: 100%;
             font-family: Verdana, Arial, Helvetica, sans-serif;
         }
@@ -25,7 +26,7 @@
         }
 
         #container {
-            background-color: #000000;
+            /*background-color: #000000;*/
             position: relative;
             min-height: 100%;
             width: 100%;
@@ -41,13 +42,15 @@
 
         #remote {
             position: absolute;
-            width: 100%;
+            height: 80%;
+            /*width: 80%;*/
+            margin-left: 20px;
             -webkit-backface-visibility: hidden;
         }
 
         #mini {
             position: absolute;
-            height: 30%;
+            margin-left: 800px;
             width: 30%;
             bottom: 32px;
             left: 4px;
@@ -68,6 +71,7 @@
     </style>
 </head>
 <body onresize="bodyOnResize()">
+
 <!--[if lte IE 9 ]>
 <div class="am-alert am-alert-danger ie-warning" data-am-alert>
     <button type="button" class="am-close">&times;</button>
@@ -77,15 +81,13 @@
 
 <div id="container" ondblclick="enterFullScreen()">
     <div id="card">
-
         <div id="remote">
-            <video width="100%" height="100%" id="remoteVideo"
-                   autoplay="autoplay">
-            </video>
-            <div id="mini">
-                <video width="100%" height="100%" id="miniVideo"
-                       autoplay="autoplay"/>
-            </div>
+            <!--<video width="100%" height="100%" id="remoteVideo" autoplay playsinline controls="true" autoplay="autoplay" />-->
+            <video width="100%" height="100%" id="remoteVideo" autoplay="autoplay" />
+        </div>
+        <div id="mini">
+            <video width="100%" height="100%" id="miniVideo"
+                   autoplay="autoplay"/>
         </div>
     </div>
 
@@ -95,7 +97,7 @@
      id="my-modal-loading">
     <div class="am-modal-dialog">
         <div class="am-modal-hd" id="tips-content">
-            正在访问摄像头和麦克风，请允许...
+            正在访问摄像头和麦克风，请允许..
         </div>
         <div class="am-modal-bd">
             <span class="am-icon-spinner am-icon-spin"></span>

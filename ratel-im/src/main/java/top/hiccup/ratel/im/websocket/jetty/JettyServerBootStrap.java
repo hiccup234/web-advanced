@@ -30,8 +30,10 @@ public class JettyServerBootStrap {
 //            server.join();
         } catch (Exception e) {
             LOGGER.error("启动Jetty失败", e);
+            e.printStackTrace();
         }
         LOGGER.info("主线程结束");
+        System.out.println("主线程结束");
     }
 
     public static void main(String[] args) {
