@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>sample im, backed by WebSocket</title>
+    <style type="text/css">
+        #console-container {
+            float: left;
+            margin: 35px 0px 0px 35px;
+            width: 500px;
+            height: 600px;
+        }
+
+        #console {
+            border: 1px solid #CCCCCC;
+            height: 400px;
+            overflow-y: scroll;
+            padding: 5px;
+            width: 100%;
+        }
+
+        #console p {
+            padding: 0;
+            margin: 0;
+        }
+
+        #connect-container {
+            float: left;
+            margin: 35px 0px 0px 100px;
+            width: 400px;
+            height: 300px;
+        }
+
+        #connect-container div {
+            padding: 5px;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var ws = null;
+
+        function setConnected(connected) {
+            document.getElementById('connect').disabled = connected;
+            document.getElementById('disconnect').disabled = !connected;
+            document.getElementById('echo').disabled = !connected;
+        }
+
+        function connect() {
+            // 一定要以/结尾
+            ws = new WebSocket("ws://127.0.0.1:8234/im/");
+            // 打开ws连接事件
+            ws.onopen = function () {
+                setConnected(true);
+                log('连接成功..');
+            };
+            ws.onmessage = function (event) {
+                log('【机器人】\n' + event.data);
+            };
+            ws.onclose = function (event) {
+                setConnected(false);
+                log('连接关闭..');
+                // log(event);
+            };
+        }
+
+        function disconnect() {
+            if (ws != null) {
+                ws.close();
+                ws = null;
+            }
+            setConnected(false);
+        }
+
+        function echo() {
+            if (ws != null) {
+                var message = document.getElementById('message').value;
+                log('【本尊】\n' + message);
+                ws.send(message);
+            } else {
+                alert('网络信号不好，请稍后重试');
+            }
+        }
+
+        function log(message) {
+            var console = document.getElementById('console');
+            var p = document.createElement('p');
+            p.style.wordWrap = 'break-word';
+            p.appendChild(document.createTextNode(message));
+            console.appendChild(p);
+            while (console.childNodes.length > 25) {
+                console.removeChild(console.firstChild);
+            }
+            console.scrollTop = console.scrollHeight;
+        }
+    </script>
+
+    <noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websockets
+        rely on Javascript being enabled. Please enable
+        Javascript and reload this page!</h2></noscript>
+</head>
+<body>
+
+<div>
+
+    <div id="console-container">
+        <div id="console"></div>
+    </div>
+
+    <div id="connect-container">
+        <div>
+            <button id="connect" onclick="connect();">连接机器人1</button>
+            <button id="connect2" onclick="connect();">连接机器人2</button>
+            <button id="disconnect" disabled="disabled" onclick="disconnect();">断开服务器</button>
+        </div>
+        <div>
+            <textarea id="message" style="width: 350px; height: 300px" placeholder="请输入聊天内容"></textarea>
+        </div>
+        <br />
+        <div>
+            <button id="echo" onclick="echo();" disabled="disabled">发送消息</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>  
