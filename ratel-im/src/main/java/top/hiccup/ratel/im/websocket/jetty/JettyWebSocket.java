@@ -8,12 +8,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.WebSocketListener;
 
+import top.hiccup.ratel.im.pool.ImSessionHolder;
 
 /**
- * F
+ * WebSocket监听器
  *
  * @author wenhy
- * @date 2019/1/25
+ * @date 2019/1/26
  */
 public class JettyWebSocket implements WebSocketListener {
 
@@ -62,6 +63,9 @@ public class JettyWebSocket implements WebSocketListener {
     @Override
     public void onWebSocketConnect(Session session) {
         this.session = session;
+
+//        ImSessionHolder
+
         webSocketMap.put(this, this);
         addOnlineCount();
         System.out.println("客户端上线，当前在线人数：" + getOnlineCount());

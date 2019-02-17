@@ -7,7 +7,7 @@ loading();
 function bodyOnResize() {
     var bodyHeight = document.body.clientHeight;
     var containerHeiht = window.document.getElementById('container').offsetHeight;
-    document.getElementById("card").style.height = bodyHeight + "px";
+    document.getElementById("room").style.height = bodyHeight + "px";
 }
 
 /**
@@ -15,11 +15,11 @@ function bodyOnResize() {
  */
 function initialize() {
     bodyOnResize();
-    var card = document.getElementById("card");
-    var miniVideo = document.getElementById("miniVideo");
+    var room = document.getElementById("room");
+    var localVideo = document.getElementById("localVideo");
     var remoteVideo = document.getElementById("remoteVideo");
     remoteVideo.style.opacity = 1;
-    miniVideo.style.opacity = 1;
+    localVideo.style.opacity = 1;
 }
 
 setTimeout(initialize, 1);
@@ -157,9 +157,9 @@ navigator.getMedia({
     "video": true
 }, function (stream) {
     //绑定本地媒体流到video标签用于输出
-    document.getElementById('miniVideo').src = URL.createObjectURL(stream);
+    document.getElementById('localVideo').src = URL.createObjectURL(stream);
     //静音处理
-    document.getElementById('miniVideo').muted = true;
+    document.getElementById('localVideo').muted = true;
     //向PeerConnection中加入需要发送的流
     answerPeerConnection.addStream(stream);
     offerPeerConnection.addStream(stream);
