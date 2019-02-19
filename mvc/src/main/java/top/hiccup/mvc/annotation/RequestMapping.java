@@ -3,7 +3,7 @@ package top.hiccup.mvc.annotation;
 import java.lang.annotation.*;
 
 /**
- * 请求地址映射
+ * 请求地址映射注解
  *
  * @author wenhy
  * @date 2018/8/22

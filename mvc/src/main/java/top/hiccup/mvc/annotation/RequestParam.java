@@ -3,7 +3,7 @@ package top.hiccup.mvc.annotation;
 import java.lang.annotation.*;
 
 /**
- * 方法参数
+ * 方法参数注解
  *
  * @author wenhy
  * @date 2018/8/22

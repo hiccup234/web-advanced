@@ -3,7 +3,7 @@ package top.hiccup.mvc.annotation;
 import java.lang.annotation.*;
 
 /**
- * 自定义Controller类
+ * 自定义Controller注解
  *
  * @author wenhy
  * @date 2018/8/22
