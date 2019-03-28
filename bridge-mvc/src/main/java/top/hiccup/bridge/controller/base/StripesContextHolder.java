@@ -36,6 +36,7 @@ public class StripesContextHolder {
     private static final ReentrantLock lock = new ReentrantLock();
 
     public static void init(ServletContext servletContext, ApplicationContext applicationContext) {
+        // 借鉴单例模式的双检锁设计
         lock.lock();
         try {
             if (hasInitialized) {
