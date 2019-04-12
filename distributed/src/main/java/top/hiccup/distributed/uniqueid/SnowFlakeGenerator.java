@@ -2,7 +2,7 @@ package top.hiccup.distributed.uniqueid;
 
 /**
  * 雪花算法：最初由Twitter开源（Scala语言），2010停止维护
- * <p>
+ *
  * 基于Java实现
  *
  * @author wenhy
