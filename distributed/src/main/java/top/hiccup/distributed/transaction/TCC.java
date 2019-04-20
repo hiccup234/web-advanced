@@ -10,5 +10,5 @@ package top.hiccup.distributed.transaction;
  * @author wenhy
  * @date 2019/1/21
  */
-public class TCCTes {
+public class TCC {
 }

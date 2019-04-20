@@ -15,5 +15,5 @@ package top.hiccup.distributed;
  * @author wenhy
  * @date 2019/1/21
  */
-public class SharingSessionTest {
+public class SharingSession {
 }
