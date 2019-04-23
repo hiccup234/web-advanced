@@ -30,21 +30,21 @@ import net.sourceforge.stripes.action.UrlBinding;
 /**
  * Stripes上下文拦截器
  * 桥接SpringMVC和Stripes，不影响原有SpringMVC
- * <p>
- * <p>
+ * 
+ * 
  * 四种思路：
- * <p>
+ * 
  * 1.扩展mvc名称空间：扩展RequestMappingHandlerAdapter等
  * 优点是：可以将整个请求的处理流程纳入到SpringMVC
  * 缺点是：侵入性较大，SpringMVC升级后需要再做适配，技术实现比较麻烦
- * <p>
+ * 
  * 2.扩展DispatcherServlet：重写onRefresh或者doService等
  * M 的 M-spring-support是直接创建的DispatcherServlet
  * 需要M的同学开回调入口，不太现实
- * <p>
+ * 
  * 3.增加拦截器，没有侵入性，不影响后续SpringMVC升级，
  * 缺点是扩展性不是很好，不过对桥接需求来说已经足够（会有个问题：所有同层的其他拦截器都需要做改造）
- * <p>
+ * 
  * 4.自定义Handlermapping，没有侵入性，理论上可以保证现有拦截器不需要改造，
  * 但是会导致SpringMVC的拦截器和Stripes的拦截器定义两套，后期维护麻烦
  *

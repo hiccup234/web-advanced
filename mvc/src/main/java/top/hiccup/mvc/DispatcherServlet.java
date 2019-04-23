@@ -19,7 +19,7 @@ import java.net.URLDecoder;
 import java.util.*;
 
 /**
- * SpringMVC本质上是一个Servlet，继承自HttpServlet。
+ * Spring MVC本质上是一个Servlet，继承自HttpServlet。
  * FrameworkServlet负责初始化SpringMVC的IOC容器（父子容器关系中的子容器，父容器一般为ContextLoaderListener启动的容器）
  *
  * ⑴ 用户发送请求至前端控制器DispatcherServlet
@@ -33,7 +33,6 @@ import java.util.*;
  * ⑼ ViewReslover解析后返回具体View
  * ⑽ DispatcherServlet对View进行渲染视图（即将模型数据填充至视图中）
  * ⑾ DispatcherServlet响应用户
- *
  *
  * @author wenhy
  * @date 2018/8/22
