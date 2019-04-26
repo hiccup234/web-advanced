@@ -12,7 +12,6 @@
     <modules>
         <module>servlet</module>
         <module>mvc</module>
-        <module>db</module>
     </modules>
 
     <build>
