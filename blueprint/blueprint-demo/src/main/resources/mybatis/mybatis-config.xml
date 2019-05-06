@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="mybatis/jdbc_mysql.properties"/>
+
+    <!-- 设置整个应用使用的常量 -->
+    <settings>
+        <!-- 设置全局延迟加载总开关 -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!-- 侵入式延迟加载开关(使用主查询对象时触发加载关联查询，关闭后变成深度延迟：使用关联对象时才加载) -->
+        <setting name="aggressiveLazyLoading" value="false"/>
+
+        <!-- 设置二级缓存全局关闭开关（默认开启的） -->
+        <!--<setting name="cacheEnabled" value="false"/>-->
+    </settings>
+    
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <!--<property name="driver" value="com.mysql.jdbc.Driver"/>-->
+                <!--<property name="url" value="jdbc:mysql://127.0.0.1:3306/oceandb"/>-->
+                <!--<property name="username" value="root"/>-->
+                <!--<property name="password" value="enjoy"/>-->
+                <property name="driver" value="${jdbc.mysql.driver}"/>
+                <property name="url" value="${jdbc.mysql.url}"/>
+                <property name="username" value="${jdbc.mysql.username}"/>
+                <property name="password" value="${jdbc.mysql.password}"/>
+            </dataSource>
+        </environment>
+        <!--<environment id="production">-->
+            <!--<transactionManager type="JDBC"/>-->
+            <!--<dataSource type="POOLED">-->
+                <!--<property name="driver" value="${driver}"/>-->
+                <!--<property name="url" value="${url}"/>-->
+                <!--<property name="username" value="${username}"/>-->
+                <!--<property name="password" value="${password}"/>-->
+            <!--</dataSource>-->
+        <!--</environment>-->
+    </environments>
+    <mappers>
+        <!--<mapper resource="com/ocean/ssm/mybatis/dao/orderMapper.xml"/>-->
+        <mapper resource="mybatis/orderMapper.xml"/>
+        <mapper resource="mybatis/regionMapper.xml"/>
+        <mapper resource="mybatis/studentMapper.xml"/>
+
+        <!--<package name="com.ocean.ssm.mybatis.dao.IOrderDao"/>-->
+    </mappers>
+</configuration>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hiccup.ssm.mybatis.dao.IRegionDao">
+
+    <!-- 5、自关联查询（级联）（一对多实现：向下级联）-->
+    <resultMap id="regionMap" type="com.hiccup.ssm.mybatis.entity.Region">
+        <id column="region_id" property="regionId"/>
+        <result column="region_name" property="regionName"/>
+        <result column="par_region_id" property="parRegionId"/>
+        <collection property="childrenRegions"
+                    ofType="com.hiccup.ssm.mybatis.entity.Region"
+                    select="queryChildrenRegionsByPar"
+                    column="region_id"/>
+    </resultMap>
+    <select id="queryChildrenRegionsByPar" resultMap="regionMap">
+        select r.region_id, r.region_name, r.par_region_id
+        from region r
+        where r.par_region_id = #{regionId}
+    </select>
+
+    <!-- 6、自关联查询（级联）（一对多实现：向下级联，包括指定参数本身）-->
+    <resultMap id="regionMap2" type="com.hiccup.ssm.mybatis.entity.Region">
+        <id column="region_id" property="regionId"/>
+        <result column="region_name" property="regionName"/>
+        <result column="par_region_id" property="parRegionId"/>
+        <collection property="childrenRegions"
+                    ofType="com.hiccup.ssm.mybatis.entity.Region"
+                    select="queryChildrenRegionsByPar"
+                    column="region_id"/>    <!-- 这里递归调用上面的statement就可以了 -->
+    </resultMap>
+    <select id="queryChildrenRegionsAndSelfByPar" resultMap="regionMap2">
+        select r.region_id, r.region_name, r.par_region_id
+        from region r
+        where r.region_id = #{regionId}
+    </select>
+
+    <!-- 7、自关联查询（级联）（多对一实现：向下上级联，包括指定参数本身）-->
+    <resultMap id="regionMap3" type="com.hiccup.ssm.mybatis.entity.Region">
+        <id column="region_id" property="regionId"/>
+        <result column="region_name" property="regionName"/>
+        <result column="par_region_id" property="parRegionId"/>
+        <association property="parRegion"
+                    javaType="com.hiccup.ssm.mybatis.entity.Region"
+                    select="queryRegionAndParById"
+                    column="par_region_id"/>
+    </resultMap>
+    <select id="queryRegionAndParById" resultMap="regionMap3">
+        select r.region_id, r.region_name, r.par_region_id
+        from region r
+        where r.region_id = #{regionId}
+    </select>
+
+</mapper>

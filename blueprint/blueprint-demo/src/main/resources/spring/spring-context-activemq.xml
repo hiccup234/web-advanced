@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+	   	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.hiccup.blueprint"/>
+    <!--注册属性文件-->
+    <context:property-placeholder location="classpath:activemq.properties"/>
+
+    <bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="${activemq.brokerURL}"/>
+        <property name="userName" value="${activemq.userName}"/>
+        <property name="password" value="${activemq.password}"/>
+    </bean>
+    <bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory"
+          destroy-method="stop">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="maxConnections" value="100"></property>
+    </bean>
+
+    <!--使用缓存可以提升效率-->
+    <bean id="cachingConnectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+        <property name="targetConnectionFactory" ref="pooledConnectionFactory"/>
+        <property name="sessionCacheSize" value="1"/>
+    </bean>
+
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="cachingConnectionFactory"/>
+        <property name="messageConverter">
+            <bean class="org.springframework.jms.support.converter.SimpleMessageConverter"/>
+        </property>
+    </bean>
+
+    <!--测试Queue,队列的名字是spring-queue-->
+    <bean id="destinationQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <!--<constructor-arg index="0" value="spring-queue"/>-->
+        <constructor-arg name="name" value="spring-queue"/>
+    </bean>
+
+    <!--测试Topic-->
+    <bean id="destinationTopic" class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg index="0" value="spring-topic"/>
+    </bean>
+</beans>

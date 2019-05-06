@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hiccup.IStudentDao">
+
+    <!--这里的parameterType可以省略-->
+    <insert id="saveStudent" parameterType="com.hiccup.Student">
+        insert into student (student_name, age) values (#{name}, #{age})
+    </insert>
+
+</mapper>

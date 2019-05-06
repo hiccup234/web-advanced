@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+	   	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--注册属性文件-->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <!--注册c3p0数据源-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="${jdbc.driver}"></property>
+        <property name="jdbcUrl" value="${jdbc.url}"></property>
+        <property name="user" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+        <!--<property name="acquireIncrement" value="${acquireIncrement}"></property>-->
+        <!--<property name="maxIdleTime" value="${maxIdleTime}"></property>-->
+        <!--<property name="initialPoolSize" value="${initialPoolSize}"></property>-->
+        <!--<property name="maxPoolSize" value="${maxPoolSize}"></property>-->
+        <!--<property name="minPoolSize" value="${minPoolSize}"></property>-->
+        <!--<property name="maxStatements" value="${maxStatements}"></property>-->
+        <!--<property name="maxStatementsPerConnection" value="${maxStatementsPerConnection}"></property>-->
+    </bean>
+
+</beans>

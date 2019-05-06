@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hiccup.ssm.mybatis.dao.IOrderDao">
+
+    <!--
+        #{}中可以放的内容
+        1）dao接口参数为对象时：属性字面量
+        2）dao接口参数为基本类型时：随意内容，此时为占位符
+        3）dao接口参数为map时：key的字面量
+        4）dao接口参数为map时且key所对应的value为对象时：可以放#{key.field}
+        5）dao接口参数为参数列表时：可以放参数索引号 #{0}、#{1}等
+    -->
+
+    <!--
+        动态SQL查询：<if>、<where>、<choose>、<foreach>、<sql>等标签
+    -->
+
+    <!-- 开启二级缓存（readOnly默认为false，缓存命中时返回被缓存对象的拷贝，会影响性能但是安全） -->
+    <!-- 二级缓存使用原则： -->
+        <!--1）不同namespace不要操作同一张表：namespace中的数据互不干扰，不同namespace同时操作可能会引起脏数据 -->
+        <!--2）不要在关联关系表上执行增删改操作：同一namespace一般是对同一表进行操作，类似第一点 -->
+        <!--3）查询多余增删改操作时才使用二级缓存 -->
+    <cache eviction="LRU" flushInterval="10800000" readOnly="true" size="1024"/>
+    <!--<cache/> 都用默认值 -->
+
+    <!--二级缓存常用框架：ehcache（实体类不用实现Serializable接口）-->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache">
+        <property name="timeToIdleSeconds" value="6000"/>
+    </cache>
+
+    <!--局部关闭二级缓存（按SQL关闭）-->
+    <select id="queryOrderById" useCache="false" resultType="com.hiccup.ssm.mybatis.entity.Order">
+        select o.order_id as "orderId",
+                o.cust_id as "custId",
+                o.amount as "amount",
+                o.remark as "remark"
+          from `order` o
+          where o.order_id = #{orderId}
+    </select>
+
+    <!-- 增删改操作不影响二级缓存配置 -->
+    <!--<insert id="saveOrder" parameterType="com.ocean.ssm.mybatis.entity.Order" flushCache="false">-->
+    <insert id="saveOrder" parameterType="com.hiccup.ssm.mybatis.entity.Order">
+        insert into `order`(order_id, cust_id, amount, remark) values (#{orderId}, #{custId}, #{amount}, #{remark})
+        <!-- 返回数据库自增长的主键ID -->
+        <selectKey resultType="long" keyProperty="orderId" order="AFTER">
+            select @@IDENTITY
+        </selectKey>
+    </insert>
+
+    <!-- 1、关联查询一对多：多表关联查询 -->
+    <resultMap id="orderMap" type="com.hiccup.ssm.mybatis.entity.Order">
+        <id column="order_id" property="orderId"/>
+        <result column="cust_id" property="custId"/>
+        <result column="amount" property="amount"/>
+        <result column="remark" property="remark"/>
+        <collection property="orderItems"
+                    ofType="com.hiccup.ssm.mybatis.entity.OrderItem">
+            <id column="order_item_id" property="orderItemId"/>
+            <result column="order_id" property="orderId"/>
+            <result column="price" property="price"/>
+            <result column="remark" property="remark"/>
+        </collection>
+    </resultMap>
+    <select id="queryOrderByOrderId" resultMap="orderMap">
+      select o.order_id, o.cust_id, o.amount, o.remark, item.order_item_id, item.price, item.remark
+        from `order` o, order_item item
+        where o.order_id = item.order_id
+               and o.order_id = #{orderId}
+    </select>
+
+    <!-- 2、关联查询一对多：单表关联多次查询 可以实现延迟加载 -->
+    <resultMap id="orderMap2" type="com.hiccup.ssm.mybatis.entity.Order">
+        <id column="order_id" property="orderId"/>
+        <result column="cust_id" property="custId"/>
+        <result column="amount" property="amount"/>
+        <result column="remark" property="remark"/>
+        <collection property="orderItems"
+                    ofType="com.hiccup.ssm.mybatis.entity.OrderItem"
+                    select="queryOrderItemByCond"
+                    column="order_id"/>
+    </resultMap>
+    <sql id="orderFields">
+        order_id, cust_id, amount, remark
+    </sql>
+    <select id="queryOrderByOrderId2" resultMap="orderMap2">
+        select <include refid="orderFields"/>
+        from `order` o  <!-- order是mysql的关键字，这里要转义一下 -->
+        where o.order_id = #{orderId}
+    </select>
+    <select id="queryOrderItemByCond" resultType="com.hiccup.ssm.mybatis.entity.OrderItem">
+        select item.order_item_id as orderItemId, item.price as price, item.order_id as orderId, item.remark as remark
+        from order_item item
+        where item.order_id = #{xxx}
+    </select>
+
+    <!-- 3、关联查询多对一（一对一）：多表关联查询 -->
+    <resultMap id="orderItemMap" type="com.hiccup.ssm.mybatis.entity.OrderItem">
+        <id column="order_item_id" property="orderItemId"/>
+        <result column="order_id" property="orderId"/>
+        <result column="price" property="price"/>
+        <result column="remark" property="remark"/>
+        <association property="order" javaType="com.hiccup.ssm.mybatis.entity.Order">
+            <id column="order_id" property="orderId"/>
+            <result column="cust_id" property="custId"/>
+            <result column="amount" property="amount"/>
+            <result column="orderRemark" property="remark"/>
+        </association>
+    </resultMap>
+    <select id="queryOrderItemByOrderId" resultMap="orderItemMap">
+        select o.order_id, o.cust_id, o.amount, o.remark as orderRemark, item.order_item_id, item.price, item.remark
+        from `order` o, order_item item
+        where o.order_id = item.order_id
+        and o.order_id = #{orderId}
+    </select>
+
+    <!-- 4、关联查询多对一（一对一）：单表关联多次查询 -->
+    <resultMap id="orderItemMap2" type="com.hiccup.ssm.mybatis.entity.OrderItem">
+        <id column="order_item_id" property="orderItemId"/>
+        <result column="order_id" property="orderId"/>
+        <result column="price" property="price"/>
+        <result column="remark" property="remark"/>
+        <association property="order" javaType="com.hiccup.ssm.mybatis.entity.Order"
+                                      select="queryOrderById"
+                                      column="order_id"/>
+    </resultMap>
+    <select id="queryOrderItemByOrderId2" resultMap="orderItemMap2">
+        select item.order_item_id, item.price, item.remark, item.order_id
+        from order_item item
+        where item.order_id = #{orderId}
+    </select>
+
+</mapper>

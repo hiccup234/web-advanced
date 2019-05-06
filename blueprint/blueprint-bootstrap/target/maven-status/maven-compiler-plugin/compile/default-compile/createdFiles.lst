@@ -1,0 +1,3 @@
+com\hiccup\blueprint\init\ContainerInitializer.class
+com\hiccup\blueprint\context\SpringContextHolder.class
+com\hiccup\blueprint\context\BeanFactoryHolder.class

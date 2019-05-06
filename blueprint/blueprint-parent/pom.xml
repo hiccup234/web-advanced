@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--蓝图工程信息-->
+    <groupId>top.hiccup.blueprint</groupId>
+    <artifactId>blueprint-parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <!--工程类型一般有：pom、jar、war-->
+    <packaging>pom</packaging>
+    <name>blueprint-parent</name>
+
+    <modules>
+        <module>../blueprint-bootstrap</module>
+        <module>../blueprint-demo</module>
+        <module>../blueprint-demo-xml</module>
+    </modules>
+
+    <properties>
+        <!--工程代码字符集-->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <springframework.version>4.3.10.RELEASE</springframework.version>
+        <log4j.version>1.2.17</log4j.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!--Servlet依赖开始-->
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>3.1.0</version>
+                <!--“已提供”依赖范围：编译和测试classpath时有效，但在运行时无效-->
+                <scope>provided</scope>
+            </dependency>
+            <!--Servlet依赖结束-->
+
+            <!--Spring相关依赖开始-->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${springframework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+                <version>${springframework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${springframework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-expression</artifactId>
+                <version>${springframework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${springframework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+                <version>${springframework.version}</version>
+            </dependency>
+            <!--Spring相关依赖结束-->
+
+        </dependencies>
+    </dependencyManagement>
+
+    <!--编译构建配置-->
+    <build>
+        <finalName>blueprint</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

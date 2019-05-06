@@ -1,0 +1,6 @@
+com\hiccup\blueprint\smo\impl\StudentSmoImpl.class
+com\hiccup\blueprint\web\controller\RegisterController.class
+com\hiccup\blueprint\dao\IStudentDao.class
+com\hiccup\blueprint\smo\IStudentSmo.class
+com\hiccup\blueprint\beans\Student.class
+com\hiccup\blueprint\web\controller\StudentController.class

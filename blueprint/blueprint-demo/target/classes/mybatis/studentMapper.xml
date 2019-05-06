@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hiccup.ssm.mybatis.dao.IStudentDao">
+
+    <!-- 8、多对多：通过中间关联表实现 -->
+    <resultMap id="studentMap" type="com.hiccup.ssm.mybatis.entity.Student">
+        <id column="student_id" property="studentId"/>
+        <result column="student_name" property="studentName"/>
+        <result column="age" property="age"/>
+        <collection property="courses"
+                    ofType="com.hiccup.ssm.mybatis.entity.Course"
+                    >
+            <id column="course_id" property="courseId"/>
+            <result column="course_name" property="courseName"/>
+        </collection>
+    </resultMap>
+    <select id="queryStudentById" resultMap="studentMap">
+        select s.student_id, s.student_name, s.age, c.course_id, c.course_name
+            from student s, course c, student_course_rela scr
+            where s.student_id = scr.student_id
+            and scr.course_id = c.course_id
+            and s.student_id = #{studentId}
+    </select>
+
+
+</mapper>

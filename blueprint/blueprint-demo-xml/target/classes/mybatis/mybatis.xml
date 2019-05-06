@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!--这里不再配置环境-->
+    <!--<environments default="test">-->
+        <!--<environment id="test">-->
+            <!--<transactionManager type=""></transactionManager>-->
+            <!--<dataSource type=""></dataSource>-->
+        <!--</environment>-->
+
+        <!--<environment id="production">-->
+            <!--<transactionManager type=""></transactionManager>-->
+            <!--<dataSource type=""></dataSource>-->
+        <!--</environment>-->
+    <!--</environments>-->
+
+    <!--实体类型别名-->
+    <typeAliases>
+        <package name="com.hiccup.blueprint.entity"/>
+    </typeAliases>
+
+    <!--映射文件-->
+    <mappers>
+        <package name="com.hiccup.blueprint.dao"/>
+        <!--也可以列出所有的Mapper文件-->
+        <!--<mapper />-->
+    </mappers>
+    
+</configuration>

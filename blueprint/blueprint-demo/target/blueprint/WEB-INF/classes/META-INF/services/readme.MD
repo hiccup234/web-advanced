@@ -1,0 +1,2 @@
+文件javax.servlet.ServletContainerInitializer不能放在WAR文件的/META-INF/services中，
+而是需要放在JAR文件的/META-INF/services中
