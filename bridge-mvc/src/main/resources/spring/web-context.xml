@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<context:component-scan base-package="top.hiccup.bridge.controller"/>
+
+	<context:property-placeholder location="classpath*:/*.properties" ignore-resource-not-found="true" ignore-unresolvable="true"/>
+
+	<mvc:annotation-driven />
+
+	<mvc:interceptors>
+		<!-- Stripes上下文拦截器 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="top.hiccup.bridge.controller.base.StripesContextHandlerInterceptor" />
+		</mvc:interceptor>
+
+		<!-- 远程热加载拦截器 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/_top/_remote/**"/>
+			<bean class="top.hiccup.remote.HotLoadHandlerInterceptor"/>
+		</mvc:interceptor>
+
+	</mvc:interceptors>
+
+	<!--<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
+		<!--<property name="maxUploadSize" value="104857600"/>-->
+	<!--</bean>-->
+
+	<!-- 静态资源文件的访问，将无法mapping到Controller的path交给default servlet handler处理
+    注:这里放到最后面，只有当我们提供的处理器不满足时才启用spring默认处理器 -->
+	<mvc:default-servlet-handler/>
+
+</beans>
