@@ -28,9 +28,7 @@ import net.sourceforge.stripes.action.HandlesEvent;
 import net.sourceforge.stripes.action.UrlBinding;
 
 /**
- * Stripes上下文拦截器
- * 桥接SpringMVC和Stripes，不影响原有SpringMVC
- * 
+ * Stripes上下文拦截器：桥接SpringMVC和Stripes，不影响原有SpringMVC
  * 
  * 四种思路：
  * 
@@ -77,7 +75,7 @@ public class StripesContextHandlerInterceptor implements HandlerInterceptor, App
     /**
      * Stripes的ActionBean路径，多个base-package以';'分隔即可
      */
-    private static String basePackages = "com.wlqq.insurance.actionbean;com.wlqq.insurance.api;com.wlqq.insurance.ymm";
+    private static String basePackages = "top.hiccup.bridge.actionbean";
 
     static {
         LOGGER.info("StripesContextHandlerInterceptor <clinit> begin");
@@ -96,6 +94,9 @@ public class StripesContextHandlerInterceptor implements HandlerInterceptor, App
     private static void doScanClasspath(String basePackage) {
         // 把给定包路径中所有的.替换成/
         URL url = StripesContextHandlerInterceptor.class.getClassLoader().getResource(separator + basePackage.replaceAll("\\.", "/"));
+        if (url == null) {
+            return ;
+        }
         String filePath = null;
         try {
             // 编码文件路径中可能存在的空格等其他字符
@@ -135,18 +136,18 @@ public class StripesContextHandlerInterceptor implements HandlerInterceptor, App
                 classpathArr = classpaths.split(";");
             }
             for (String path : classpathArr) {
-                // 排除掉fis-server-bridge
                 if (path.contains("XXX") && !path.contains("XXX-bridge")) {
                     classpath = path;
                 }
             }
-            // 编码文件路径中可能存在的空格等其他字符
-            classpath = URLDecoder.decode(classpath, "UTF-8");
-            LOGGER.info("fis-server path: {}", classpath);
             // 把给定的基本包路径中所有的.替换成系统文件分隔符
             String pathName = basePackage.replaceAll("\\.", "/");
             LOGGER.info("pathName: {}", pathName);
-            if (classpath.endsWith(".jar")) {
+            if (classpath != null && classpath.endsWith(".jar")) {
+                // 编码文件路径中可能存在的空格等其他字符
+                classpath = URLDecoder.decode(classpath, "UTF-8");
+                LOGGER.info("path: {}", classpath);
+
                 JarFile jarFile = new JarFile(classpath);
                 Enumeration<JarEntry> files = jarFile.entries();
                 LOGGER.info("files: {}", files);
