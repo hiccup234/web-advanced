@@ -124,3 +124,29 @@ Ctrl+c按键    让当前的程序停掉
 
 
 #### Linux中一切皆文件，每个文件Linux都会分配一个文件描述符（File Descriptor），fd是一个整数。
+
+### time命令行可以统计程序的运行时间
+real time: Wall Clock Time，即程序运行从开始到结束，挂在墙上的时钟走过的时间
+user time: CPU运行本程序时花在用户态的时间（操作系统的用户态）
+sys  time: CPU运行本程序时花在内核态的时间
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

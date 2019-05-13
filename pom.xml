@@ -12,6 +12,7 @@
     <modules>
         <module>servlet</module>
         <module>mvc</module>
+        <module>tools</module>
     </modules>
 
     <build>
