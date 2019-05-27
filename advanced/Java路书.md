@@ -1,27 +1,17 @@
 
-# Java路书
+## Java路书
 
+Java基础：集合框架，反射，锁，多线程和Java线程模型，IO/Socket，swing，RMI，reflect，EJB，JDBC，OSGI
 
-Java基础：集合框架，IO，多线程和Java线程模型，网络编程，swing，RMI，reflect，EJB，JDBC，OSGI
-
-Java基础：
-
-Java平台技术：JVM、类加载器、Java字节码技术、Java语言  	架构师（TOGAF证书）
+Java平台：JVM、类加载器、Java字节码技术、Java语言  	架构师（TOGAF证书）
 
 掘金小册 -- Netty
 
-极客时间：
-《MySQL实战45讲》 8讲
+极客时间
 
 Java技术栈公众号 -- 年度总结
 
-
-技能树：编程语言： Java基础、反射、集合、I/O、锁、多线程、Class文件格式、JVM、JMM、Spring、Mybatis
-       数据库： MySQL、Redis
-       网络编程： NIO、Netty
-       分布式：zookeeper
-
-支持反射机制的语言：Python, Lua, C#, Java等
+#### 支持反射机制的语言：Python, Lua, C#, Java等
 
 
 1、为什么JDBC的驱动类只能通过Class.forName()加载？
@@ -40,80 +30,79 @@ this.getClass.getClassLoader.loadClass()【可以指定类加载器】
 
 
 ## 基础篇
-
 ### 基本功
-面向对象的特征
-final, finally, finalize 的区别
-int 和 Integer 有什么区别
-重载和重写的区别
-抽象类和接口有什么区别
-说说反射的用途及实现
-说说自定义注解的场景及实现
-HTTP 请求的 GET 与 POST 方式的区别
-session 与 cookie 区别
-session 分布式处理
-JDBC 流程
-MVC 设计思想
-equals 与 == 的区别
+面向对象的特征？（抽象，封装，继承，多态）
+final, finally, finalize 的区别？
+int 和 Integer 有什么区别？
+重载和重写的区别？
+抽象类和接口有什么区别？
+说说反射的用途及实现？
+说说自定义注解的场景及实现？
+HTTP 请求的 GET 与 POST 方式的区别？
+session 与 cookie 区别？
+session 分布式处理？（Web容器间同步，数据库存储，session服务器）
+JDBC 流程？
+MVC 设计思想？
+equals 与 == 的区别？
 ### 集合
-List 和 Set 区别
-List 和 Map 区别
-Arraylist 与 LinkedList 区别
-ArrayList 与 Vector 区别
-HashMap 和 Hashtable 的区别
-HashSet 和 HashMap 区别
-HashMap 和 ConcurrentHashMap 的区别
-HashMap 的工作原理及代码实现
-ConcurrentHashMap 的工作原理及代码实现
+List 和 Set 区别？
+List 和 Map 区别？
+Arraylist 与 LinkedList 区别？
+ArrayList 与 Vector 区别？
+HashMap 和 Hashtable 的区别？
+HashSet 和 HashMap 区别？
+HashMap 和 ConcurrentHashMap 的区别？
+HashMap 的工作原理及代码实现？
+ConcurrentHashMap 的工作原理及代码实现？
 ### 线程
-创建线程的方式及实现
-sleep() 、join（）、yield（）有什么区别
-说说 CountDownLatch 原理
-说说 CyclicBarrier 原理
-说说 Semaphore 原理
-说说 Exchanger 原理
-说说 CountDownLatch 与 CyclicBarrier 区别
-ThreadLocal 原理分析
-讲讲线程池的实现原理
-线程池的几种方式
-线程的生命周期
+创建线程的方式及实现？
+sleep() 、join()、yield()有什么区别？
+说说 CountDownLatch 原理？
+说说 CyclicBarrier 原理？
+说说 Semaphore 原理？
+说说 Exchanger 原理？
+说说 CountDownLatch 与 CyclicBarrier 区别？
+ThreadLocal 原理分析？
+讲讲线程池的实现原理？
+线程池的几种方式？
+线程的生命周期？
 ### 锁机制
-说说线程安全问题
-volatile 实现原理
-synchronize 实现原理
-synchronized 与 lock 的区别
-CAS 乐观锁
-ABA 问题
-乐观锁的业务场景及实现方式
-## 核心篇
+说说线程安全问题？
+volatile 实现原理？
+synchronize 实现原理？
+synchronized 与 lock 的区别？
+CAS 乐观锁？
+ABA 问题？
+乐观锁的业务场景及实现方式？
 
+## 核心篇
 ### 数据存储
-MySQL 索引使用的注意事项
-说说反模式设计
-说说分库与分表设计
-分库与分表带来的分布式困境与应对之策
-说说 SQL 优化之道
-MySQL 遇到的死锁问题
-存储引擎的 InnoDB 与 MyISAM
-数据库索引的原理
-为什么要用 B-tree
-聚集索引与非聚集索引的区别
-limit 20000 加载很慢怎么解决
-选择合适的分布式主键方案
-选择合适的数据存储方案
-ObjectId 规则
-聊聊 MongoDB 使用场景
-倒排索引
-聊聊 ElasticSearch 使用场景
+MySQL 索引使用的注意事项？
+说说反模式设计？
+说说分库与分表设计？（MySQL的分区表）
+分库与分表带来的分布式困境与应对之策？
+说说 SQL 优化之道？
+MySQL 遇到的死锁问题？
+存储引擎的 InnoDB 与 MyISAM？
+数据库索引的原理？
+为什么要用B+tree？
+聚集索引与非聚集索引的区别？
+limit 20000 加载很慢怎么解决？（先索引覆盖，然后再关联查询，以避免大量无意义的回表）
+选择合适的分布式主键方案？（自增主键固定步长，雪花算法）
+选择合适的数据存储方案？
+ObjectId 规则？
+聊聊 MongoDB 使用场景？
+倒排索引？
+聊聊 ElasticSearch 使用场景？
 ### 缓存使用
-Redis 有哪些类型
-Redis 内部结构
-聊聊 Redis 使用场景
-Redis 持久化机制
-Redis 如何实现持久化
-Redis 集群方案与实现
-Redis 为什么是单线程的
-缓存奔溃
+Redis 有哪些数据类型？
+Redis 内部结构？
+聊聊 Redis 使用场景？
+Redis 持久化机制？
+Redis 如何实现持久化？
+Redis 集群方案与实现？
+Redis 为什么是单线程的？
+缓存崩溃
 缓存降级
 使用缓存的合理性问题
 ### 消息队列
@@ -125,10 +114,8 @@ Redis 为什么是单线程的
 如何保证消息的有序性
 
 ## 框架篇
-
-Spring
-
-BeanFactory 和 ApplicationContext 有什么区别
+### Spring
+BeanFactory 和 ApplicationContext 有什么区别？（ApplicationContext = BeanFactory + Resource）
 Spring Bean 的生命周期
 Spring IOC 如何实现
 说说 Spring AOP
@@ -142,8 +129,7 @@ Spring MVC 启动流程
 Spring 的单例实现原理
 Spring 框架中用到了哪些设计模式
 Spring 其他产品（Srping Boot、Spring Cloud、Spring Secuirity、Spring Data、Spring AMQP 等）
-Netty
-
+### Netty
 为什么选择 Netty
 说说业务中，Netty 的使用场景
 原生的 NIO 在 JDK 1.7 版本存在 epoll bug
@@ -153,8 +139,8 @@ Netty 线程模型
 说说 Netty 的零拷贝
 Netty 内部执行流程
 Netty 重连实现
-## 微服务篇
 
+## 分布式篇
 ### 微服务
 前后端分离是如何做的
 微服务哪些框架
@@ -201,10 +187,9 @@ HTTPS 降级攻击
 如何发现性能瓶颈
 性能调优的常见手段
 说说你在项目中如何进行性能调优
+
 ## 工程篇
-
 ### 需求分析
-
 你如何对需求原型进行理解和拆分
 说说你对功能性需求的理解
 说说你对非功能性需求的理解
@@ -219,11 +204,10 @@ HTTPS 降级攻击
 你如何划分领域边界
 说说你项目中的领域建模
 说说概要设计
-设计模式
-
-你项目中有使用哪些设计模式
-说说常用开源框架中设计模式使用分析
-说说你对设计原则的理解
+#### 设计模式
+你项目中有使用哪些设计模式？
+说说常用开源框架中设计模式使用分析？
+说说你对设计原则的理解？
 23种设计模式的设计理念
 设计模式之间的异同，例如策略模式与状态模式的区别
 设计模式之间的结合，例如策略模式+简单工厂模式的实践
@@ -245,74 +229,72 @@ HTTPS 降级攻击
 说说你对开发运维的实践
 介绍下工作中的一个对自己最有价值的项目，以及在这个过程中的角色
 ## 软实力
-说说你的亮点
-说说你最近在看什么书
-说说你觉得最有意义的技术书籍
-工作之余做什么事情
-说说个人发展方向方面的思考
-说说你认为的服务端开发工程师应该具备哪些能力
-说说你认为的架构师是什么样的，架构师主要做什么
-说说你所理解的技术专家
+说说你的亮点？
+说说你最近在看什么书？
+说说你觉得最有意义的技术书籍？（Java编程思想）
+工作之余做什么事情？
+说说个人发展方向方面的思考？（架构师）
+说说你认为的服务端开发工程师应该具备哪些能力？
+说说你认为的架构师是什么样的，架构师主要做什么？（所有脱离业务的架构都是耍流氓）
+说说你所理解的技术专家？（基础，技术广度、深度，术业专攻）
 
 
 
+### 蚂蚁金服面试问题
+#### Java多线程
+    线程池的原理，为什么要创建线程池？
+    线程的生命周期，什么时候会出现僵尸进程？
+    什么是线程安全，如何实现线程安全？
+    创建线程池有哪几个核心参数？ 如何合理配置线程池的大小？
+    synchronized、volatile区别、synchronized锁粒度、模拟死锁场景、原子性与可见性？
 
-Java多线程
-线程池的原理，为什么要创建线程池？
-线程的生命周期，什么时候会出现僵尸进程？
-什么是线程安全，如何实现线程安全？
-创建线程池有哪几个核心参数？ 如何合理配置线程池的大小？
-synchronized、volatile区别、synchronized锁粒度、模拟死锁场景、原子性与可见性？
+#### JVM相关
+    JVM内存模型，GC机制和原理，GC分哪两种？什么时候会触发Full GC？
+    JVM里的有几种classloader，为什么会有多种？
+    什么是双亲委派机制？介绍一些运作过程，双亲委派模型的好处？
+    什么情况下我们需要破坏双亲委派模型？
+    常见的JVM调优方法有哪些？可以具体到调整哪个参数，调成什么值？
+    JVM虚拟机内存划分、类加载器、垃圾收集算法、垃圾收集器、class文件结构是如何解析的？
 
-JVM相关
-JVM内存模型，GC机制和原理；GC分哪两种；什么时候会触发Full GC？
-JVM里的有几种classloader，为什么会有多种？
-什么是双亲委派机制？介绍一些运作过程，双亲委派模型的好处；(这个我真的不会...)
-什么情况下我们需要破坏双亲委派模型？
-常见的JVM调优方法有哪些？可以具体到调整哪个参数，调成什么值？
-JVM虚拟机内存划分、类加载器、垃圾收集算法、垃圾收集器、class文件结构是如何解析的；
+#### Java扩展
+    红黑树的实现原理和应用场景？
+    NIO是什么？适用于何种场景？
+    Java9比Java8改进了什么？
+    HashMap内部的数据结构是什么？底层是怎么实现的？
+    说说反射的用途及实现，反射是不是很慢，我们在项目中是否要避免使用反射？（委派实现(动态生成字节码)和本地实现）
+    说说自定义注解的场景及实现？
+    List和Map区别，Arraylist与LinkedList区别，ArrayList与Vector区别？
 
-Java扩展
-红黑树的实现原理和应用场景；
-NIO是什么？适用于何种场景？
-Java9比Java8改进了什么；
-HashMap内部的数据结构是什么？底层是怎么实现的？
-说说反射的用途及实现，反射是不是很慢，我们在项目中是否要避免使用反射；
-说说自定义注解的场景及实现；
-List和Map区别，Arraylist与LinkedList区别，ArrayList与Vector 区别；
+#### Spring
+    Spring AOP的实现原理和场景？（应用场景很重要）
+    Spring bean的作用域和生命周期？
+    Spring Boot比Spring做了哪些改进？ Spring 5比Spring4做了哪些改进？（惭愧呀，我们还在用Spring4，高版本的没关心过）
+    Spring IOC是什么？优点是什么？
+    SpringMVC、动态代理、反射、AOP原理、事务隔离级别？
 
-Spring
-Spring AOP的实现原理和场景；（应用场景很重要）
-Spring bean的作用域和生命周期；
-Spring Boot比Spring做了哪些改进？ Spring 5比Spring4做了哪些改进；（惭愧呀，我们还在用Spring4，高版本的没关心过）
-Spring IOC是什么？优点是什么？
-SpringMVC、动态代理、反射、AOP原理、事务隔离级别；
+#### 中间件
+    Dubbo完整的一次调用链路介绍；
+    Dubbo支持几种负载均衡策略？
+    Dubbo Provider服务提供者要控制执行并发请求上限，具体怎么做？
+    Dubbo启动的时候支持几种配置方式？
+    了解几种消息中间件产品？各产品的优缺点介绍？
+    消息中间件如何保证消息的一致性和如何进行消息的重试机制？
+    Spring Cloud熔断机制介绍？
+    Spring Cloud对比下Dubbo，什么场景下该使用Spring Cloud？
+    
+#### 数据库篇
+    锁机制介绍：行锁、表锁、排他锁、共享锁？悲观锁、乐观锁的业务场景及实现方式？
+    事务介绍，分布式事务的理解，常见的解决方案有哪些，什么是两阶段提交、三阶段提交？（类比binlog与redolog的两阶段提交）
+    MySQL记录binlog的方式主要包括三种模式？每种模式的优缺点是什么？
+    分布式事务的原理2阶段提交，同步\异步\阻塞\非阻塞
+    数据库事务隔离级别，MySQL默认的隔离级别-RR、Spring如何实现事务？（声明式事务）
+    JDBC如何实现事务、嵌套事务实现、分布式事务实现？
+    SQL的整个解析、执行过程原理、SQL行转列？
 
-中间件
-Dubbo完整的一次调用链路介绍；
-Dubbo支持几种负载均衡策略？
-Dubbo Provider服务提供者要控制执行并发请求上限，具体怎么做？
-Dubbo启动的时候支持几种配置方式？
-了解几种消息中间件产品？各产品的优缺点介绍；
-消息中间件如何保证消息的一致性和如何进行消息的重试机制？
-Spring Cloud熔断机制介绍；
-Spring Cloud对比下Dubbo，什么场景下该使用Spring Cloud？
-
-数据库篇
-锁机制介绍：行锁、表锁、排他锁、共享锁；
-乐观锁的业务场景及实现方式；
-事务介绍，分布式事物的理解，常见的解决方案有哪些，什么事两阶段提交、三阶段提交；
-MySQL记录binlog的方式主要包括三种模式？每种模式的优缺点是什么？
-MySQL锁，悲观锁、乐观锁、排它锁、共享锁、表级锁、行级锁；
-分布式事务的原理2阶段提交，同步\异步\阻塞\非阻塞；
-数据库事务隔离级别，MySQL默认的隔离级别、Spring如何实现事务、
-JDBC如何实现事务、嵌套事务实现、分布式事务实现；
-SQL的整个解析、执行过程原理、SQL行转列；
-
-Redis
-Redis为什么这么快？redis采用多线程会有哪些问题？
-Redis支持哪几种数据结构；
-Redis跳跃表的问题；
-Redis单进程单线程的Redis如何能够高并发?
-Redis如何使用Redis实现分布式锁？
-Redis分布式锁操作的原子性，Redis内部是如何实现的？
+#### Redis
+    Redis为什么这么快？redis采用多线程会有哪些问题？（如果I/O采用多线程则需要做数据的同步，会影响并发度）
+    Redis支持哪几种数据结构？（string,list,set,zset,hash）
+    Redis跳跃表的问题？（查找复杂度可能会退化为O(n)，解决办法就是随机选择索引的层高）
+    Redis单进程单线程的Redis如何能够高并发？（单线程仅是针对I/O操作来讲，省去了同步和线程切换的开销）
+    Redis如何使用Redis实现分布式锁？（setnx，还要注意最好加上expire失效时间，即超时锁）
+    Redis分布式锁操作的原子性，Redis内部是如何实现的？（单线程I/O，天生具有同步性）
