@@ -38,43 +38,32 @@ Java技术栈公众号 -- 年度总结
 ### 基本功
 面向对象的特征？（抽象，封装，继承，多态）
 final, finally, finalize 的区别？
-int 和 Integer 有什么区别？
+int 和 Integer 有什么区别？（占用内存字节数，对象头）
 重载和重写的区别？
 抽象类和接口有什么区别？
 说说反射的用途及实现？
 说说自定义注解的场景及实现？
-HTTP 请求的 GET 与 POST 方式的区别？
-session 与 cookie 区别？
-session 分布式处理？（Web容器间同步，数据库存储，session服务器）
-JDBC 流程？
-MVC 设计思想？
 equals 与 == 的区别？
+JDBC 流程？（由Class.forName引出SPI，再引出破坏双亲委派，线程上下文类加载器）
+MVC 设计思想？
+HTTP 请求的 GET 与 POST 方式的区别？
+session 与 cookie 区别？session 分布式处理？（Web容器间同步，数据库存储，session服务器）
 ### 集合
-List 和 Set 区别？
-List 和 Map 区别？
-Arraylist 与 LinkedList 区别？
-ArrayList 与 Vector 区别？
-HashMap 和 Hashtable 的区别？
-HashSet 和 HashMap 区别？
-HashMap 和 ConcurrentHashMap 的区别？
-HashMap 的工作原理及代码实现？
-ConcurrentHashMap 的工作原理及代码实现？
+List 和 Set 区别？List 和 Map 区别？
+Arraylist 与 LinkedList 区别？ArrayList 与 Vector 区别？
+HashMap 和 Hashtable 的区别？HashSet 和 HashMap 区别？HashMap 和 ConcurrentHashMap 的区别？
+HashMap 的工作原理及代码实现？ConcurrentHashMap 的工作原理及代码实现？
 ### 线程
 创建线程的方式及实现？
 sleep() 、join()、yield()有什么区别？
-说说 CountDownLatch 原理？
-说说 CyclicBarrier 原理？
-说说 Semaphore 原理？
-说说 Exchanger 原理？
+说说 CountDownLatch 原理？说说 CyclicBarrier 原理？说说 Semaphore 原理？说说 Exchanger 原理？
 说说 CountDownLatch 与 CyclicBarrier 区别？
+讲讲线程池的实现原理？线程池的几种方式？线程的生命周期？
 ThreadLocal 原理分析？
-讲讲线程池的实现原理？
-线程池的几种方式？
-线程的生命周期？
 ### 锁机制
-说说线程安全问题？
-volatile 实现原理？
-synchronize 实现原理？
+说说线程安全问题？（竞态条件、临界区，线程封闭，只读共享，对象安全共享，保护对象(锁)）
+volatile 实现原理？（内存屏障，happens-before）
+synchronize 实现原理？（）
 synchronized 与 lock 的区别？
 CAS 乐观锁？
 ABA 问题？
