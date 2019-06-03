@@ -1,9 +1,9 @@
 
 ## Java路书
 
-Java基础：集合框架，反射，锁，多线程和Java线程模型，IO/Socket，swing，RMI，reflect，EJB，JDBC，OSGI
+Java基础：集合框架，反射，锁，多线程和Java线程模型，IO/Socket，RMI，EJB，JDBC，OSGI
 
-Java平台：JVM、类加载器、Java字节码技术、Java语言  	架构师（TOGAF证书）
+Java平台：JMM、JVM、类加载器、Java字节码技术  	架构师（TOGAF证书）
 
 掘金小册 -- Netty
 
@@ -13,26 +13,6 @@ Java技术栈公众号 -- 年度总结
 
 #### 支持反射机制的语言：Python, Lua, C#, Java等
 
-
-1、为什么JDBC的驱动类只能通过Class.forName()加载？（一般加载类有三种方式）
-    a.通过new关键字的加载、连接、初始化【当前类加载器】
-    b.Class.forName()【当前类加载器】
-    c.this.getClass.getClassLoader.loadClass()【可以指定类加载器】
-如果通过new来加载会导致程序必须要import特定的驱动类，这样的话耦合性太高，如果要更换数据库驱动就必须要修改程序
-（JDBC4.0已经不用依赖Class.forName，可以使用SPI来加载（破坏双亲委派模型，线程上下文类加载器））
-
-2、(String)null是否合法？
-因null值可以强制转换为任何Java类类型，所以(String)null是合法的
-
-3、JDK中除了String外还有哪些类是final的？
-除了String外，常见的还有基本类型的包装器：Byte,Boolean,Character,Short,Integer,Double等，以及：Class,Array,Field,Method,Constructor,Parameter 等等
-
-4、Java 中应该使用什么数据类型来代表价格？	BigDecimal
-    数据库设计中也常用bigint来表示价格（从基本单位表示起，1元=100分）
-    
-5、各版本HashMap变化对比，什么时候用LinkedHashMap，ConcurrentHashMap？
-
-6、线程池本质是一个HashSet，每个Worker对应一个线程，增加了一个阻塞队列来，当没有任务的时候阻塞线程以及缓冲任务
 
 ## 基础篇
 ### 基本功
@@ -312,3 +292,24 @@ HTTPS 降级攻击
 NoSQL与关系型数据库区别？
 DB主要存储结构化数据，有表结构的定义，要符合第一二三范式
 NoSQL主要存储非结构化数据，如key-value，按文件存储等
+
+
+1、为什么JDBC的驱动类只能通过Class.forName()加载？（一般加载类有三种方式）
+    a.通过new关键字的加载、连接、初始化【当前类加载器】
+    b.Class.forName()【当前类加载器】
+    c.this.getClass.getClassLoader.loadClass()【可以指定类加载器】
+如果通过new来加载会导致程序必须要import特定的驱动类，这样的话耦合性太高，如果要更换数据库驱动就必须要修改程序
+（JDBC4.0已经不用依赖Class.forName，可以使用SPI来加载（破坏双亲委派模型，线程上下文类加载器））
+
+2、(String)null是否合法？
+因null值可以强制转换为任何Java类类型，所以(String)null是合法的
+
+3、JDK中除了String外还有哪些类是final的？
+除了String外，常见的还有基本类型的包装器：Byte,Boolean,Character,Short,Integer,Double等，以及：Class,Array,Field,Method,Constructor,Parameter 等等
+
+4、Java 中应该使用什么数据类型来代表价格？	BigDecimal
+    数据库设计中也常用bigint来表示价格（从基本单位表示起，1元=100分）
+    
+5、各版本HashMap变化对比，什么时候用LinkedHashMap，ConcurrentHashMap？
+
+6、线程池本质是一个HashSet，每个Worker对应一个线程，增加了一个阻塞队列来，当没有任务的时候阻塞线程以及缓冲任务
