@@ -313,3 +313,11 @@ NoSQL主要存储非结构化数据，如key-value，按文件存储等
 5、各版本HashMap变化对比，什么时候用LinkedHashMap，ConcurrentHashMap？
 
 6、线程池本质是一个HashSet，每个Worker对应一个线程，增加了一个阻塞队列来，当没有任务的时候阻塞线程以及缓冲任务
+
+
+### 高频知识点
+SpringMVC原理？
+IOC和AOP原理？
+阻塞队列实现？
+synchronized和lock区别？
+JVM调优？
