@@ -15,7 +15,11 @@ Java技术栈公众号 -- 年度总结
 
 
 UML是统一建模语言，常用图包括：用例图,静态图(包括类图、对象图和包图),行为图,交互图(顺序图,合作图),实现图。
-
+    
+    线程池本身是一个 HashSet
+        private final HashSet<Worker> workers = new HashSet<Worker>();
+    
+    Spring IOC 容器本身是一个ConcurrentHashMap，key是Bean的name，value就是Bean对象
 
 ## 基础篇
 ### 基本功
