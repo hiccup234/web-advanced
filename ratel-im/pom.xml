@@ -16,6 +16,14 @@
     </properties>
 
     <dependencies>
+        <!-- 基于netty(自定义协议) -->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.1.6.Final</version>
+        </dependency>
+
+        <!-- 基于websocket -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
@@ -33,7 +41,6 @@
             <artifactId>javax-websocket-server-impl</artifactId>
             <version>${jetty-version}</version>
         </dependency>
-
 
 
         <dependency>
@@ -91,8 +98,6 @@
             <artifactId>javax-websocket-client-impl</artifactId>
             <version>${jetty-version}</version>
         </dependency>
-
-
 
 
         <!--Simple Logging Facade for Java-->
