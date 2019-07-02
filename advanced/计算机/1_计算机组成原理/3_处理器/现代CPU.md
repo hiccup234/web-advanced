@@ -24,3 +24,10 @@
     
     Python的numpy库利用了SIMD指令（单指令多数据流：Single Instruction Multiple Data）以及MMX（矩阵数学扩展），
     所以才在人工智能、机器学习、数学计算方面大放异彩。
+    
+### CPU指令集
+    
+   * RISC：一般都是固定长度，UC Berkeley的大卫·帕特森（David Patterson）教授70年代提出，2/8原则，CPU80%时间都在运行20%的指令
+                   
+   * CISC：x86指令集的长度不是固定的，但随着ARM的竞争，Intel推出了微指令架构，把CISC指令在译码器中翻译成RISC指令，并把翻译结果缓存在L0 cache
+   

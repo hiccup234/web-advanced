@@ -16,10 +16,10 @@ Java技术栈公众号 -- 年度总结
 
 UML是统一建模语言，常用图包括：用例图,静态图(包括类图、对象图和包图),行为图,交互图(顺序图,合作图),实现图。
     
-    线程池本身是一个 HashSet
+线程池本身是一个HashSet，定义如下：
         private final HashSet<Worker> workers = new HashSet<Worker>();
     
-    Spring IOC 容器本身是一个ConcurrentHashMap，key是Bean的name，value就是Bean对象
+Spring IOC 容器本身是一个ConcurrentHashMap，key是Bean的name，value就是Bean对象
 
 ## 基础篇
 ### 基本功
@@ -219,6 +219,28 @@ HTTPS 降级攻击
 说说你认为的架构师是什么样的，架构师主要做什么？（所有脱离业务的架构都是耍流氓）
 说说你所理解的技术专家？（基础，技术广度、深度，术业专攻）
 
+
+1、Java开发中用得最多的数据结构有哪些？
+    ArrayList，HashMap
+2、谈谈对HashMap的理解，底层数据结构，怎么解决Hash碰撞，HashMap是线程安全的吗？HashTable呢? JUC里的并发容器？
+    哈希表的一种实现方式，底层数组+链表
+3、谈谈JMM，说说类的加载过程，GC以及内存管理，平时在Tomcat里有没有配置过相关JVM参数，以及性能调优？
+    重排序，volatile守护上下文，内存屏障；加载、链接（验证，解析，准备）、初始化
+4、Http协议，Https呢？Get和Post的区别，Tcp/Ip协议，3次握手，4次挥手，以及滑动窗口机制？
+    超文本传输协议，加密的超文本
+5、开发中用了哪些数据库?存储引擎有哪些？悲观锁乐观锁的场景？
+6、SpringMVC以及Mybatis实现原理，是否看过底层源码？
+7、Redis中的数据类型，事务，使用场景？
+
+
+线上频繁full gc如何处理? CPU 使用率过高怎么办?
+
+
+Class.forName("java.lang.String")和String.class.getClassLoader().loadClass("java.lang.String") 什么区别啊?
+
+Tomcat的运行机制？分析Tomcat线程模型？Tomcat系统参数和调优？
+
+MySQL索引B+Tree机制？SQL执行计划详解？索引优化详解？SQL语句如何优化？
 
 
 ### 蚂蚁金服面试问题
