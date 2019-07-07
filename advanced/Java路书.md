@@ -1,72 +1,61 @@
 
 ## Java路书
 
-Java基础：集合框架，反射，锁，多线程和Java线程模型，IO/Socket，RMI，EJB，JDBC，OSGI
+Java：集合框架，反射，锁，多线程和Java线程模型，IO/Socket，RMI，EJB，JDBC，OSGI
+    JMM、JVM、类加载器、Java字节码技术
 
-Java平台：JMM、JVM、类加载器、Java字节码技术  	架构师（TOGAF证书）
-
-掘金小册 -- Netty
-
+架构师TOGAF证书
+掘金小册 -- Netty OK
 极客时间
-
 Java技术栈公众号 -- 年度总结
-
-#### 支持反射机制的语言：Python, Lua, C#, Java等
 
 
 UML是统一建模语言，常用图包括：用例图,静态图(包括类图、对象图和包图),行为图,交互图(顺序图,合作图),实现图。
     
-线程池本身是一个HashSet，定义如下：
-        private final HashSet<Worker> workers = new HashSet<Worker>();
-    
-Spring IOC 容器本身是一个ConcurrentHashMap，key是Bean的name，value就是Bean对象
-
-
-
 
 
 
 
 ## 基础篇
-### 基本功
-面向对象的特征？（抽象，封装，继承，多态）
+### 基础知识
+面向对象的特征？ -- 抽象，封装，继承，多态（RTTI，对象头类型指针）
 final, finally, finalize 的区别？
-int 和 Integer 有什么区别？（占用内存字节数，对象头）
-重载和重写的区别？
+int 和 Integer 有什么区别？ -- 占用内存字节数，对象头
+重载和重写的区别？ -- 构造器不能重写，通过super调用父类构造器
 抽象类和接口有什么区别？
-说说反射的用途及实现？
+说说反射的用途及实现？ -- 动态创建对象、访问字段、调用方法，采用委派模式实现=本地实现+动态实现，即JVM里C++和动态生成字节码
 说说自定义注解的场景及实现？
 equals 与 == 的区别？
-JDBC 流程？（由Class.forName引出SPI，再引出破坏双亲委派，线程上下文类加载器）
-MVC 设计思想？
+JDBC 流程？ -- 加载驱动，获取连接，prepareStatement，得到执行结果（由Class.forName引出SPI，再引出破坏双亲委派，线程上下文类加载器）
+MVC 设计思想？ -- 模型、视图、控制器，随着前后端分离已经过时，目前流行RPC
 HTTP 请求的 GET 与 POST 方式的区别？
-session 与 cookie 区别？session 分布式处理？（Web容器间同步，数据库存储，session服务器）
+session 与 cookie 区别？session 分布式处理？ -- Web容器间同步，数据库存储，专门的session服务
 ### 集合
 List 和 Set 区别？List 和 Map 区别？
-Arraylist 与 LinkedList 区别？ArrayList 与 Vector 区别？
-HashMap 和 Hashtable 的区别？HashSet 和 HashMap 区别？HashMap 和 ConcurrentHashMap 的区别？
+ArrayList 与 LinkedList 区别？ArrayList 与 Vector 区别？
+HashMap 和 HashTable 的区别？HashSet 和 HashMap 区别？HashMap 和 ConcurrentHashMap 的区别？
 HashMap 的工作原理及代码实现？ConcurrentHashMap 的工作原理及代码实现？
 ### 线程
-创建线程的方式及实现？
-sleep() 、join()、yield()有什么区别？
+创建线程的方式及实现？ -- 继承Thread，实现Runnable，实现Callable；但是Java中线程的表示只有一种，即Thread类
+sleep()、wait()、join()、yield()有什么区别？
 说说 CountDownLatch 原理？说说 CyclicBarrier 原理？说说 Semaphore 原理？说说 Exchanger 原理？
 说说 CountDownLatch 与 CyclicBarrier 区别？
-讲讲线程池的实现原理？线程池的几种方式？线程的生命周期？
-ThreadLocal 原理分析？
+讲讲线程池的实现原理？线程池的几种方式？线程的生命周期？线程池的生命周期？ -- ThreadPoolExecutor，自定义参数
+ThreadLocal 原理分析？ -- Thread类中ThreadLocalMap
 ### 锁机制
-说说线程安全问题？（竞态条件、临界区，线程封闭，只读共享，对象安全共享，保护对象(锁)）
-volatile 实现原理？（内存屏障，happens-before）
-synchronize 实现原理？（）
-synchronized 与 lock 的区别？
-CAS 乐观锁？
-ABA 问题？
-乐观锁的业务场景及实现方式？
+说说线程安全问题？ -- 竞态条件、临界区，线程封闭，只读共享，对象安全共享，保护对象(锁)
+volatile 实现原理？ -- 内存屏障，happens-before
+synchronize 实现原理？ -- 1.6后的锁升级
+synchronized 与 lock 的区别？ -- lock功能更全更灵活，tryLock，带超时lock，线程状态不一样：一个是BLOCKED，一个是WAITED
+CAS 乐观锁？ -- X86架构CPU的cmpxchg指令
+ABA 问题？ -- 版本号，AtomicStampedReference
+乐观锁的业务场景及实现方式？ -- AQS，无锁化，数据库乐观锁
 
 ## 核心篇
 ### 数据存储
 MySQL 索引使用的注意事项？
 说说反模式设计？
-说说分库与分表设计？（MySQL的分区表）
+说说分库与分表设计？  MySQL的分区表，hash,range,group=hash+range
 分库与分表带来的分布式困境与应对之策？
 说说 SQL 优化之道？
 MySQL 遇到的死锁问题？
@@ -74,22 +63,21 @@ MySQL 遇到的死锁问题？
 数据库索引的原理？
 为什么要用B+tree？
 聚集索引与非聚集索引的区别？
-limit 20000 加载很慢怎么解决？（先索引覆盖，然后再关联查询，以避免大量无意义的回表）
-选择合适的分布式主键方案？（自增主键固定步长，雪花算法）
+limit 20000 加载很慢怎么解决？   先索引覆盖，然后再关联查询，以避免大量无意义的回表
+选择合适的分布式主键方案？   自增主键固定步长，雪花算法
 选择合适的数据存储方案？
 ObjectId 规则？
 聊聊 MongoDB 使用场景？
 倒排索引？
 聊聊 ElasticSearch 使用场景？
 ### 缓存使用
-Redis 有哪些数据类型？
-Redis 内部结构？
+Redis 有哪些数据类型？  string,list,hash,set,zset
+Redis 内部结构？ 简单动态字符串sds，压缩表，跳跃表
 聊聊 Redis 使用场景？
-Redis 持久化机制？
-Redis 如何实现持久化？
+Redis 持久化机制？如何实现持久化？   RDB,AOF
 Redis 集群方案与实现？
-Redis 为什么是单线程的？
-缓存崩溃
+Redis 为什么是单线程的？ 
+缓存穿透、缓存雪崩、缓存击穿
 缓存降级
 使用缓存的合理性问题
 ### 消息队列
@@ -102,12 +90,12 @@ Redis 为什么是单线程的？
 
 ## 框架篇
 ### Spring
-BeanFactory 和 ApplicationContext 有什么区别？（ApplicationContext = BeanFactory + Resource）
+BeanFactory 和 ApplicationContext 有什么区别？ApplicationContext = BeanFactory + Resource
 Spring Bean 的生命周期
 Spring IOC 如何实现
 说说 Spring AOP
 Spring AOP 实现原理
-动态代理（cglib 与 JDK）
+动态代理cglib 与 JDK
 Spring 事务实现方式
 Spring 事务底层原理
 如何自定义注解实现功能
@@ -115,7 +103,7 @@ Spring MVC 运行流程
 Spring MVC 启动流程
 Spring 的单例实现原理
 Spring 框架中用到了哪些设计模式
-Spring 其他产品（Srping Boot、Spring Cloud、Spring Secuirity、Spring Data、Spring AMQP 等）
+Spring 其他产品Srping Boot、Spring Cloud、Spring Secuirity、Spring Data、Spring AMQP 等
 ### Netty
 为什么选择 Netty
 说说业务中，Netty 的使用场景
@@ -180,50 +168,50 @@ HTTPS 降级攻击
 你如何对需求原型进行理解和拆分
 说说你对功能性需求的理解
 说说你对非功能性需求的理解
-你针对产品提出哪些交互和改进意见？（H5收银台多次分享同时支付的问题）
-你如何理解用户痛点？（最好的方法就是自己成为用户，举例：银行IT一般要到柜台实习一年）
-设计能力？（大型网站技术架构）
+你针对产品提出哪些交互和改进意见？H5收银台多次分享同时支付的问题
+你如何理解用户痛点？最好的方法就是自己成为用户，举例：银行IT一般要到柜台实习一年
+设计能力？大型网站技术架构
 
 说说你在项目中使用过的 UML 图
 你如何考虑组件化
-你如何考虑服务化（按业务拆分）
+你如何考虑服务化按业务拆分
 你如何进行领域建模
 你如何划分领域边界
 说说你项目中的领域建模
 说说概要设计
 #### 设计模式
-你项目中有使用哪些设计模式？（单例，工厂，策略，模板，代理，构建器，装饰）
+你项目中有使用哪些设计模式？单例，工厂，策略，模板，代理，构建器，装饰
 说说常用开源框架中设计模式使用分析？
 说说你对设计原则的理解？
 23种设计模式的设计理念
-设计模式之间的异同，例如策略模式与状态模式的区别（策略本身封装了算法，将策略传入程序并直接执行即可，状态则是程序本身的逻辑转换）
+设计模式之间的异同，例如策略模式与状态模式的区别策略本身封装了算法，将策略传入程序并直接执行即可，状态则是程序本身的逻辑转换
 设计模式之间的结合，例如策略模式+简单工厂模式的实践
-设计模式的性能，例如单例模式哪种性能更好？（双检锁或静态内部类）
+设计模式的性能，例如单例模式哪种性能更好？双检锁或静态内部类
 业务工程
 
 你系统中的前后端分离是如何做的
-说说你的开发流程（MRD，PRD，需求评审，设计评审，单元测试，代码review）
-你和团队是如何沟通的（Jira，Confilunce）
-你如何进行代码评审（reviewboard，代码讲解）
-说说你对技术与业务的理解（基础：技术服务于业务，进阶：技术推动业务，高阶：技术产生业务）
+说说你的开发流程MRD，PRD，需求评审，设计评审，单元测试，代码review
+你和团队是如何沟通的Jira，Confilunce
+你如何进行代码评审reviewboard，代码讲解
+说说你对技术与业务的理解基础：技术服务于业务，进阶：技术推动业务，高阶：技术产生业务
 说说你在项目中经常遇到的 Exception
-说说你在项目中遇到感觉最难Bug，怎么解决的（最难的都是线上不能复现的问题，加日志）
+说说你在项目中遇到感觉最难Bug，怎么解决的最难的都是线上不能复现的问题，加日志
 说说你在项目中遇到印象最深困难，怎么解决的
 你觉得你们项目还有哪些不足的地方
-你是否遇到过 CPU 100% ，如何排查与解决（首先恢复线上服务，top -h，jstat -gcutil，jstack）
-你是否遇到过 内存 OOM ，如何排查与解决（首先恢复线上服务，jps，jmap，mat）
-说说你对敏捷开发的实践（Jira）
-说说你对开发运维的实践（DevOps，结合自己的阿里云ECS阐述）
-介绍下工作中的一个对自己最有价值的项目，以及在这个过程中的角色（桥接SpringMVC与Stripes，技术构想，验证，选型，开发，测试，上线）
+你是否遇到过 CPU 100% ，如何排查与解决首先恢复线上服务，top -h，jstat -gcutil，jstack
+你是否遇到过 内存 OOM ，如何排查与解决首先恢复线上服务，jps，jmap，mat
+说说你对敏捷开发的实践Jira
+说说你对开发运维的实践DevOps，结合自己的阿里云ECS阐述
+介绍下工作中的一个对自己最有价值的项目，以及在这个过程中的角色桥接SpringMVC与Stripes，技术构想，验证，选型，开发，测试，上线
 ## 软实力
 说说你的亮点？
 说说你最近在看什么书？
-说说你觉得最有意义的技术书籍？（Java编程思想）
+说说你觉得最有意义的技术书籍？Java编程思想
 工作之余做什么事情？
-说说个人发展方向方面的思考？（架构师）
+说说个人发展方向方面的思考？架构师
 说说你认为的服务端开发工程师应该具备哪些能力？
-说说你认为的架构师是什么样的，架构师主要做什么？（所有脱离业务的架构都是耍流氓）
-说说你所理解的技术专家？（基础，技术广度、深度，术业专攻）
+说说你认为的架构师是什么样的，架构师主要做什么？所有脱离业务的架构都是耍流氓
+说说你所理解的技术专家？基础，技术广度、深度，术业专攻
 
 
 1、Java开发中用得最多的数据结构有哪些？
@@ -231,7 +219,7 @@ HTTPS 降级攻击
 2、谈谈对HashMap的理解，底层数据结构，怎么解决Hash碰撞，HashMap是线程安全的吗？HashTable呢？JUC里的并发容器？
     哈希表的一种实现方式，底层数组+链表
 3、谈谈JMM，说说类的加载过程，GC以及内存管理，平时在Tomcat里有没有配置过相关JVM参数，以及性能调优？
-    重排序，volatile守护上下文，内存屏障；加载、链接（验证，解析，准备）、初始化
+    重排序，volatile守护上下文，内存屏障；加载、链接验证，解析，准备、初始化
    
 4、Http协议，Https呢？Get和Post的区别，Tcp/Ip协议，3次握手，4次挥手，以及滑动窗口机制？
     超文本传输协议，加密的超文本
@@ -265,14 +253,14 @@ HTTPS 降级攻击
     NIO是什么？适用于何种场景？
     Java9比Java8改进了什么？
     HashMap内部的数据结构是什么？底层是怎么实现的？
-    说说反射的用途及实现，反射是不是很慢，我们在项目中是否要避免使用反射？（委派实现(动态生成字节码)和本地实现）
+    说说反射的用途及实现，反射是不是很慢，我们在项目中是否要避免使用反射？委派实现(动态生成字节码)和本地实现
     说说自定义注解的场景及实现？
     List和Map区别，Arraylist与LinkedList区别，ArrayList与Vector区别？
 
 #### Spring
-    Spring AOP的实现原理和场景？（应用场景很重要）
+    Spring AOP的实现原理和场景？应用场景很重要
     Spring bean的作用域和生命周期？
-    Spring Boot比Spring做了哪些改进？ Spring 5比Spring4做了哪些改进？（惭愧呀，我们还在用Spring4，高版本的没关心过）
+    Spring Boot比Spring做了哪些改进？ Spring 5比Spring4做了哪些改进？惭愧呀，我们还在用Spring4，高版本的没关心过
     Spring IOC是什么？优点是什么？
     SpringMVC、动态代理、反射、AOP原理、事务隔离级别？
 
@@ -288,26 +276,26 @@ HTTPS 降级攻击
     
 #### 数据库篇
     锁机制介绍：行锁、表锁、排他锁、共享锁？悲观锁、乐观锁的业务场景及实现方式？
-    事务介绍，分布式事务的理解，常见的解决方案有哪些，什么是两阶段提交、三阶段提交？（类比binlog与redolog的两阶段提交）
+    事务介绍，分布式事务的理解，常见的解决方案有哪些，什么是两阶段提交、三阶段提交？类比binlog与redolog的两阶段提交
     MySQL记录binlog的方式主要包括三种模式？每种模式的优缺点是什么？
     分布式事务的原理2阶段提交，同步\异步\阻塞\非阻塞
-    数据库事务隔离级别，MySQL默认的隔离级别-RR、Spring如何实现事务？（声明式事务）
+    数据库事务隔离级别，MySQL默认的隔离级别-RR、Spring如何实现事务？声明式事务
     JDBC如何实现事务、嵌套事务实现、分布式事务实现？
     SQL的整个解析、执行过程原理、SQL行转列？
 
 #### Redis
-    Redis为什么这么快？redis采用多线程会有哪些问题？（如果I/O采用多线程则需要做数据的同步，会影响并发度）
-    Redis支持哪几种数据结构？（string,list,set,zset,hash）
-    Redis跳跃表的问题？（查找复杂度可能会退化为O(n)，解决办法就是随机选择索引的层高）
-    Redis单进程单线程的Redis如何能够高并发？（单线程仅是针对I/O操作来讲，省去了同步和线程切换的开销）
-    Redis如何使用Redis实现分布式锁？（setnx，还要注意最好加上expire失效时间，即超时锁）
-    Redis分布式锁操作的原子性，Redis内部是如何实现的？（单线程I/O，天生具有同步性）
+    Redis为什么这么快？redis采用多线程会有哪些问题？如果I/O采用多线程则需要做数据的同步，会影响并发度
+    Redis支持哪几种数据结构？string,list,set,zset,hash
+    Redis跳跃表的问题？查找复杂度可能会退化为O(n)，解决办法就是随机选择索引的层高
+    Redis单进程单线程的Redis如何能够高并发？单线程仅是针对I/O操作来讲，省去了同步和线程切换的开销
+    Redis如何使用Redis实现分布式锁？setnx，还要注意最好加上expire失效时间，即超时锁
+    Redis分布式锁操作的原子性，Redis内部是如何实现的？单线程I/O，天生具有同步性
     
 
 如何进行JVM调优工作的？
 调优在线上生产环境的机会比较少，只跟我们的架构师一起分析过2次线上服务挂掉的问题，另外就是自己本机实验调优：
-1、服务502，CPU狂飙到1000%，首先恢复线上服务，然后再分析，通过jstack得到线程栈日志发现大量的tomcat http线程阻塞在log4j的callAppenders，要获取RootLogger对象锁（因为是同步方法，而最近加了一个APP端调用的接口，打了日志logger.info()，而这个接口访问量非常大，锁竞争激烈导致其他线程都阻塞挂起了），解决办法就是去掉那个接口的日志打印并且给日志加上缓冲，或则可以考虑用线程异步打印日志。
-2、服务502，CPU偏高，搜索日志有OOM，jmap -dump:live,format=b,file=test.bin Vmid拿到dump文件，MAT分析发现是ThreadLocal引起的内存泄漏，线程池有ThreadLocal<LinkedList>没有remove导致的（也是跟打印日志有关系）。
+1、服务502，CPU狂飙到1000%，首先恢复线上服务，然后再分析，通过jstack得到线程栈日志发现大量的tomcat http线程阻塞在log4j的callAppenders，要获取RootLogger对象锁因为是同步方法，而最近加了一个APP端调用的接口，打了日志logger.info()，而这个接口访问量非常大，锁竞争激烈导致其他线程都阻塞挂起了，解决办法就是去掉那个接口的日志打印并且给日志加上缓冲，或则可以考虑用线程异步打印日志。
+2、服务502，CPU偏高，搜索日志有OOM，jmap -dump:live,format=b,file=test.bin Vmid拿到dump文件，MAT分析发现是ThreadLocal引起的内存泄漏，线程池有ThreadLocal<LinkedList>没有remove导致的也是跟打印日志有关系。
 
 单例：饥饿，懒汉，双检锁，静态内部类和枚举
 工厂：Spring就是一个超级工厂，工厂模式下代码需要跟具体工厂耦合，抽象工厂更加解耦
@@ -316,7 +304,7 @@ HTTPS 降级攻击
 代理：JDK动态代理，CGLib等，用户实现Spring AOP
 装饰：Collections的synchronized+List,Set,Map等方法，IO中的BufferSteam
 构建器：lombok的@builder
-策略：线程池的拒绝策略（传入一段算法）
+策略：线程池的拒绝策略传入一段算法
 命令：命令模式式传入一个参数，算法由内部已经实现好了
 
 NoSQL与关系型数据库区别？
@@ -324,12 +312,12 @@ DB主要存储结构化数据，有表结构的定义，要符合第一二三范
 NoSQL主要存储非结构化数据，如key-value，按文件存储等
 
 
-1、为什么JDBC的驱动类只能通过Class.forName()加载？（一般加载类有三种方式）
+1、为什么JDBC的驱动类只能通过Class.forName()加载？一般加载类有三种方式
     a.通过new关键字的加载、连接、初始化【当前类加载器】
     b.Class.forName()【当前类加载器】
     c.this.getClass.getClassLoader.loadClass()【可以指定类加载器】
 如果通过new来加载会导致程序必须要import特定的驱动类，这样的话耦合性太高，如果要更换数据库驱动就必须要修改程序
-（JDBC4.0已经不用依赖Class.forName，可以使用SPI来加载（破坏双亲委派模型，线程上下文类加载器））
+JDBC4.0已经不用依赖Class.forName，可以使用SPI来加载破坏双亲委派模型，线程上下文类加载器
 
 2、(String)null是否合法？
 因null值可以强制转换为任何Java类类型，所以(String)null是合法的
@@ -338,7 +326,7 @@ NoSQL主要存储非结构化数据，如key-value，按文件存储等
 除了String外，常见的还有基本类型的包装器：Byte,Boolean,Character,Short,Integer,Double等，以及：Class,Array,Field,Method,Constructor,Parameter 等等
 
 4、Java 中应该使用什么数据类型来代表价格？	BigDecimal
-    数据库设计中也常用bigint来表示价格（从基本单位表示起，1元=100分）
+    数据库设计中也常用bigint来表示价格从基本单位表示起，1元=100分
     
 5、各版本HashMap变化对比，什么时候用LinkedHashMap，ConcurrentHashMap？
 
@@ -433,7 +421,7 @@ TCP三次握手，四层分手的工作流程画一下流程图为什么不是�
 
 源码中所用到的经典设计思想及常用设计模式
 
-系统架构如何选择合适日志技术（log4j、log4j2、slf4j、jcl…….）
+系统架构如何选择合适日志技术log4j、log4j2、slf4j、jcl…….
 
 springAOP的原理，springAOP和Aspectj的关系，springAOP的源码问题
 
@@ -476,8 +464,8 @@ zk原理知道吗zk都可以干什么Paxos算法知道吗?说一下原理和实�
 9、JVM老年代与新生代的比例？ YGC与FGC发生在哪些场景?
 10、Jstack,jmap,jutil分别的意义？如何线上排查JVM的相关问题？
 11、线程池的构造器的5个参数及其具体意义？
-12、单机上一个线程池正在处理请求，如果忽然断电会怎样？（正在处理的任务和阻塞队列里的请求怎么处理？）
-13、快速排序？广度优先搜索（队列实现）
+12、单机上一个线程池正在处理请求，如果忽然断电会怎样？正在处理的任务和阻塞队列里的请求怎么处理？
+13、快速排序？广度优先搜索队列实现
 14、设计一个对外的接口，在1，2，3这三个主机上(IP不同)实现负载均衡和顺序轮询机制，需要考虑并发？
 
 
@@ -514,7 +502,7 @@ https://www.cnblogs.com/paddix/p/5309550.html/
 标记清除法，复制算法，标记整理、分代算法。
 新生代一般采用复制算法 GC，老年代使用标记整理算法。
 垃圾收集器：串行新生代收集器、串行老生代收集器、并行新生代收集器、并行老年代收集器。
-CMS（Current Mark Sweep）收集器是一种以获取最短回收停顿时间为目标的收集器，它是一种并发收集器，采用的是Mark-Sweep算法。
+CMSCurrent Mark Sweep收集器是一种以获取最短回收停顿时间为目标的收集器，它是一种并发收集器，采用的是Mark-Sweep算法。
 详见 Java GC机制。
 http://www.cnblogs.com/dolphin0520/p/3783345.htmll/
 7、你有没有遇到过OutOfMemory问题？你是怎么来处理这个问题的？处理 过程中有哪些收获？
@@ -524,12 +512,12 @@ permgen space、heap space 错误。
 集合类中有对对象的引用，使用后未清空，GC不能进行回收；
 代码中存在循环产生过多的重复对象；
 启动参数堆内存值小。
-详见 Java 内存溢出（java.lang.OutOfMemoryError）的常见情况和处理方式总结。
+详见 Java 内存溢出java.lang.OutOfMemoryError的常见情况和处理方式总结。
 http://outofmemory.cn/c/java-outOfMemoryError/
 8、JDK 1.8之后Perm Space有哪些变动? MetaSpace⼤⼩默认是⽆限的么? 还是你们会通过什么⽅式来指定⼤⼩?
 JDK 1.8后用元空间替代了 Perm Space；字符串常量存放到堆内存中。
 MetaSpace大小默认没有限制，一般根据系统内存的大小。JVM会动态改变此值。
--XX:MetaspaceSize：分配给类元数据空间（以字节计）的初始大小（Oracle逻辑存储上的初始高水位，the initial high-water-mark）。此值为估计值，MetaspaceSize的值设置的过大会延长垃圾回收时间。垃圾回收过后，引起下一次垃圾回收的类元数据空间的大小可能会变大。
+-XX:MetaspaceSize：分配给类元数据空间以字节计的初始大小Oracle逻辑存储上的初始高水位，the initial high-water-mark。此值为估计值，MetaspaceSize的值设置的过大会延长垃圾回收时间。垃圾回收过后，引起下一次垃圾回收的类元数据空间的大小可能会变大。
 -XX:MaxMetaspaceSize：分配给类元数据空间的最大值，超过此值就会触发Full GC，此值默认没有限制，但应取决于系统内存的大小。JVM会动态地改变此值。
 9、jstack 是⼲什么的? jstat 呢？如果线上程序周期性地出现卡顿，你怀疑可 能是 GC 导致的，你会怎么来排查这个问题？线程⽇志⼀般你会看其中的什么 部分？
 jstack 用来查询 Java 进程的堆栈信息。
