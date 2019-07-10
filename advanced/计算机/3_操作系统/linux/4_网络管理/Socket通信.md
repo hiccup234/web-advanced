@@ -24,8 +24,8 @@
     int socket(int domain, int type, int protocol);
     返回文件描述符fd
     domain：表示使用什么IP协议 AF_INET 表示 IPv4，AF_INET6 表示 IPv6。
-    type：表示 socket 类型。SOCK_STREAM，面向流的TCP；SOCK_DGRAM 就是面向数据报的UDP，
-          SOCK_RAW 可以直接操作 IP 层，或者非 TCP 和 UDP 的协议，例如 ICMP。
+    type：表示 socket 类型。SOCK_STREAM 面向流的TCP；SOCK_DGRAM 面向数据报的UDP；
+          SOCK_RAW 可以直接操作IP层，或者非TCP和UDP的协议，例如ICMP。
     protocol：表示协议，包括 IPPROTO_TCP、IPPTOTO_UDP。
     
 
