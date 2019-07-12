@@ -10,9 +10,8 @@ public class BranchPrediction {
                 }
             }
         }
-        long end = System.currentTimeMillis();
         // 5ms
-        System.out.println("Time spent in first loop is " + (end - start));
+        System.out.println("Time spent in first loop is " + (System.currentTimeMillis() - start));
 
         start = System.currentTimeMillis();
         for (int i = 0; i < 10000; i++) {
@@ -22,7 +21,6 @@ public class BranchPrediction {
             }
         }
         // 15ms
-        end = System.currentTimeMillis();
-        System.out.println("Time spent in second loop is " + (end - start) + "ms");
+        System.out.println("Time spent in second loop is " + (System.currentTimeMillis() - start) + "ms");
     }
 }
