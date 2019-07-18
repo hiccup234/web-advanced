@@ -9,9 +9,19 @@ Java：集合框架，反射，锁，多线程和Java线程模型，IO/Socket，
 极客时间
 Java技术栈公众号 -- 年度总结
 
-
 UML是统一建模语言，常用图包括：用例图,静态图(包括类图、对象图和包图),行为图,交互图(顺序图,合作图),实现图。
     
+
+4、具有面向对象分析、设计、开发能力，精通OO，AOP，设计模式； 
+3、掌握JVM性能调优、了解常见JVM垃圾收集算法、Java并发框架与库、了解Java内存模型； 
+4、熟悉各种Web前端技术（XHTML/XML/CSS/JavaScript/Ajax等），熟悉至少一种JavaScript（如：NodeJs/JQuery/AngularJS/Backbone等），CSS框架（如：Bootstrap），熟悉至少一种自动构建工具； 
+5、具备Hbase、Hive、Spark等技术优先； 
+2、熟悉Spring、Mybatis、SpringMVC、Velocity等主流开源框架，有一定的前端开发技能储备； 
+3、熟悉SOA解决方案(如 dubbo)、 缓存（Redis）、消息中间件(Active MQ、Kafka等)、搜索引擎(Lucence、Solr)、静态文件服务（FastDFS）等技术; 
+4、熟悉SQL语句的编写，优化，调优及排错，熟练使用Mysql数据库，有实际项目的数据库建模经验； 
+5、参与过高并发、高可靠性系统的设计，如负载均衡系统、集群、系统容量评估、流量控制、性能优化、故障排查、日志收集和分析等； 
+6、掌握设计以及开发工具的使用，如uml、git、maven等; 
+7、了解基本的WEB以及数据库安全知识，并能够在设计与开发中关注杜绝安全问题; 
 
 
 
