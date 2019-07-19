@@ -1,8 +1,7 @@
 
 ## Java路书
 
-Java：集合框架，反射，锁，多线程和Java线程模型，IO/Socket，RMI，EJB，JDBC，OSGI
-    JMM、JVM、类加载器、Java字节码技术
+Java：集合框架，反射，锁，多线程和Java线程模型，IO/Socket，RMI，EJB，JDBC，OSGI，JMM、JVM、类加载器、Java字节码技术
 
 架构师TOGAF证书
 掘金小册 -- Netty OK
@@ -11,18 +10,6 @@ Java技术栈公众号 -- 年度总结
 
 UML是统一建模语言，常用图包括：用例图,静态图(包括类图、对象图和包图),行为图,交互图(顺序图,合作图),实现图。
     
-
-4、具有面向对象分析、设计、开发能力，精通OO，AOP，设计模式； 
-3、掌握JVM性能调优、了解常见JVM垃圾收集算法、Java并发框架与库、了解Java内存模型； 
-4、熟悉各种Web前端技术（XHTML/XML/CSS/JavaScript/Ajax等），熟悉至少一种JavaScript（如：NodeJs/JQuery/AngularJS/Backbone等），CSS框架（如：Bootstrap），熟悉至少一种自动构建工具； 
-5、具备Hbase、Hive、Spark等技术优先； 
-2、熟悉Spring、Mybatis、SpringMVC、Velocity等主流开源框架，有一定的前端开发技能储备； 
-3、熟悉SOA解决方案(如 dubbo)、 缓存（Redis）、消息中间件(Active MQ、Kafka等)、搜索引擎(Lucence、Solr)、静态文件服务（FastDFS）等技术; 
-4、熟悉SQL语句的编写，优化，调优及排错，熟练使用Mysql数据库，有实际项目的数据库建模经验； 
-5、参与过高并发、高可靠性系统的设计，如负载均衡系统、集群、系统容量评估、流量控制、性能优化、故障排查、日志收集和分析等； 
-6、掌握设计以及开发工具的使用，如uml、git、maven等; 
-7、了解基本的WEB以及数据库安全知识，并能够在设计与开发中关注杜绝安全问题; 
-
 
 
 
@@ -41,17 +28,17 @@ MVC 设计思想？ -- 模型、视图、控制器，随着前后端分离已经
 HTTP 请求的 GET 与 POST 方式的区别？
 session 与 cookie 区别？session 分布式处理？ -- Web容器间同步，数据库存储，专门的session服务
 ### 集合
-List 和 Set 区别？List 和 Map 区别？
+List 和 Set 区别？List 和 Map 区别？ -- List线性表，Set不允许重复值，Map哈希表的一种实现
 ArrayList 与 LinkedList 区别？ArrayList 与 Vector 区别？
 HashMap 和 HashTable 的区别？HashSet 和 HashMap 区别？HashMap 和 ConcurrentHashMap 的区别？
 HashMap 的工作原理及代码实现？ConcurrentHashMap 的工作原理及代码实现？
 ### 线程
 创建线程的方式及实现？ -- 继承Thread，实现Runnable，实现Callable；但是Java中线程的表示只有一种，即Thread类
-sleep()、wait()、join()、yield()有什么区别？
+sleep()、wait()、join()、yield()有什么区别？ -- wait释放锁，sleep、yield不释放锁
 说说 CountDownLatch 原理？说说 CyclicBarrier 原理？说说 Semaphore 原理？说说 Exchanger 原理？
 说说 CountDownLatch 与 CyclicBarrier 区别？
-讲讲线程池的实现原理？线程池的几种方式？线程的生命周期？线程池的生命周期？ -- ThreadPoolExecutor，自定义参数
-ThreadLocal 原理分析？ -- Thread类中ThreadLocalMap
+讲讲线程池的实现原理？线程池的几种方式？线程的生命周期？线程池的生命周期？ -- 线程池本质HashSet，ThreadPoolExecutor，自定义参数
+ThreadLocal 原理分析？ -- Thread类中ThreadLocalMap，key存储ThreadLocal对象(this)
 ### 锁机制
 说说线程安全问题？ -- 竞态条件、临界区，线程封闭，只读共享，对象安全共享，保护对象(锁)
 volatile 实现原理？ -- 内存屏障，happens-before
