@@ -32,17 +32,16 @@ List 和 Set 区别？List 和 Map 区别？ -- List线性表，Set不允许重�
 ArrayList 与 LinkedList 区别？ArrayList 与 Vector 区别？
 HashMap 和 HashTable 的区别？HashSet 和 HashMap 区别？HashMap 和 ConcurrentHashMap 的区别？
 HashMap 的工作原理及代码实现？ConcurrentHashMap 的工作原理及代码实现？
-### 线程
+### 锁机制与线程
 创建线程的方式及实现？ -- 继承Thread，实现Runnable，实现Callable；但是Java中线程的表示只有一种，即Thread类
 sleep()、wait()、join()、yield()有什么区别？ -- wait释放锁，sleep、yield不释放锁，join底层循环调用wait
 说说 CountDownLatch 原理？说说 CyclicBarrier 原理？说说 Semaphore 原理？说说 Exchanger 原理？
 说说 CountDownLatch 与 CyclicBarrier 区别？
 讲讲线程池的实现原理？线程池的几种方式？线程的生命周期？线程池的生命周期？ -- 线程池本质HashSet，ThreadPoolExecutor，自定义参数
 ThreadLocal 原理分析？ -- Thread类中ThreadLocalMap，key存储ThreadLocal对象(this)
-### 锁机制
 说说线程安全问题？ -- 竞态条件、临界区，线程封闭，只读共享，对象安全共享，保护对象(锁)
 volatile 实现原理？ -- 内存屏障，happens-before
-synchronize 实现原理？ -- 1.6后的锁升级
+synchronized 实现原理？ -- 1.6后的锁升级
 synchronized 与 lock 的区别？ -- lock功能更全更灵活，tryLock，带超时lock，线程状态不一样：一个是BLOCKED，一个是WAITED
 CAS 乐观锁？ -- X86架构CPU的cmpxchg指令
 ABA 问题？ -- 版本号，AtomicStampedReference
@@ -50,23 +49,23 @@ ABA 问题？ -- 版本号，AtomicStampedReference
 
 ## 核心篇
 ### 数据存储
-MySQL 索引使用的注意事项？
-说说反模式设计？
-说说分库与分表设计？  MySQL的分区表，hash,range,group=hash+range
-分库与分表带来的分布式困境与应对之策？
-说说 SQL 优化之道？
-MySQL 遇到的死锁问题？
-存储引擎的 InnoDB 与 MyISAM？
-数据库索引的原理？
-为什么要用B+tree？
-聚集索引与非聚集索引的区别？
-limit 20000 加载很慢怎么解决？   先索引覆盖，然后再关联查询，以避免大量无意义的回表
-选择合适的分布式主键方案？   自增主键固定步长，雪花算法
-选择合适的数据存储方案？
+MySQL 索引使用的注意事项？ -- 增加索引、索引覆盖、最左原则、索引前缀（like的前面不能放%）、索引条件下推
+说说反模式设计？ -- 反范式设计，一致性和性能的综合考量
+说说分库与分表设计？ -- MySQL的分区表，hash,range,group=hash+range
+分库与分表带来的分布式困境与应对之策？ -- 由中间件层完成多表联合查询和join
+说说 SQL 优化之道？ -- 
+MySQL 遇到的死锁问题？ -- 
+存储引擎的 InnoDB 与 MyISAM？ -- MyISAM不支持事务，不支持行锁，InnoDB的锁是加在索引上的，保存表的行数select * from快
+数据库索引的原理？ -- B+树，哈希索引，聚簇索引
+为什么要用B+tree？ -- 磁盘局部性原理，为什么不用哈希索引，排序数组索引，平衡二叉树，红黑树？
+聚集索引与非聚集索引的区别？ -- 类比书的传统目录和书侧面的便签目录
+limit 20000 加载很慢怎么解决？ -- 先索引覆盖查除主键ID，然后再关联查询，以避免大量无意义的回表
+选择合适的分布式主键方案？ -- 自增主键固定步长，雪花算法等
+选择合适的数据存储方案？ -- Redis，MogoDB，RDBMS
 ObjectId 规则？
 聊聊 MongoDB 使用场景？
-倒排索引？
-聊聊 ElasticSearch 使用场景？
+倒排索引？ -- 通过单词找出所在文件
+聊聊 ElasticSearch 使用场景？ -- 日志搜索，全文检索
 ### 缓存使用
 Redis 有哪些数据类型？  string,list,hash,set,zset
 Redis 内部结构？ 简单动态字符串sds，压缩表，跳跃表
