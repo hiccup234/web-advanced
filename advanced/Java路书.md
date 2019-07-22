@@ -34,7 +34,7 @@ HashMap 和 HashTable 的区别？HashSet 和 HashMap 区别？HashMap 和 Concu
 HashMap 的工作原理及代码实现？ConcurrentHashMap 的工作原理及代码实现？
 ### 线程
 创建线程的方式及实现？ -- 继承Thread，实现Runnable，实现Callable；但是Java中线程的表示只有一种，即Thread类
-sleep()、wait()、join()、yield()有什么区别？ -- wait释放锁，sleep、yield不释放锁
+sleep()、wait()、join()、yield()有什么区别？ -- wait释放锁，sleep、yield不释放锁，join底层循环调用wait
 说说 CountDownLatch 原理？说说 CyclicBarrier 原理？说说 Semaphore 原理？说说 Exchanger 原理？
 说说 CountDownLatch 与 CyclicBarrier 区别？
 讲讲线程池的实现原理？线程池的几种方式？线程的生命周期？线程池的生命周期？ -- 线程池本质HashSet，ThreadPoolExecutor，自定义参数
