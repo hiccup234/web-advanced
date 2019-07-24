@@ -31,4 +31,4 @@ CPU与高速缓存L1/L2/L3的映射关系：
     1、写直达（Write-Through），即就算Cache Block里有数据，也每次都要写入主内存（类似volatile的效果）
     2、写回（Write-Back），即判断是否Cache Block有数据且原数据是否为脏数据，如果是把源数据写回内存，并把当前数据写入Cache Block，并标记为脏数据
     
-    
+缓存一致性原理：    

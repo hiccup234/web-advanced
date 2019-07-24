@@ -76,46 +76,47 @@ Redis 为什么是单线程的？ -- 单线程处理IO，NIO多路复用，避�
 缓存降级
 使用缓存的合理性问题 -- 缓存旁路设计
 ### 消息队列
-消息队列的使用场景
-消息的重发补偿解决思路
-消息的幂等性解决思路
-消息的堆积解决思路
-自己如何实现消息队列
-如何保证消息的有序性
+消息队列的使用场景 -- 异步解耦，削锋填谷，看成线程池（线程池本身也有阻塞队列，只不过MQ是进程外的队列）
+消息的重发补偿解决思路 -- 消费者幂等，RabbitMQ有消息重试机制
+消息的幂等性解决思路 -- 分布式锁+本地事务
+消息的堆积解决思路 -- 一般是消费者消费不过来引起堆积，
+自己如何实现消息队列 -- 考虑优先级队列，延迟队列
+如何保证消息的有序性？重复性？事务消息？ -- 集群中消息要求发到同一queue，M1先发收到ack后再发M2，消费端也是，先消费完M1再消费M2；
+                                    重复性由消费者幂等；事务为先mq prepare再本地事务，然后commit，类似MySQL的binlog与redoLog的2PC
 
 ## 框架篇
 ### Spring
-BeanFactory 和 ApplicationContext 有什么区别？ApplicationContext = BeanFactory + Resource
-Spring Bean 的生命周期
-Spring IOC 如何实现
-说说 Spring AOP
+BeanFactory 和 ApplicationContext 有什么区别？ -- ApplicationContext = BeanFactory + Resource
+Spring Bean 的生命周期 -- ApplicationContextAware，BeanPostProcessor，BeanFactoryPostProcessor，InitializeBean
+Spring IOC 如何实现 -- 本质是一个ConcurrentHashMap，通过反射创建对象
+说说 Spring AOP -- 动态代理的应用案例，JDK动态代理，CGLib代理
 Spring AOP 实现原理
 动态代理cglib 与 JDK
-Spring 事务实现方式
+Spring 事务实现方式 -- 编程型事务（自己手动begin，commit），申明式事务（利用AOP实现，动态增强）
 Spring 事务底层原理
-如何自定义注解实现功能
-Spring MVC 运行流程
-Spring MVC 启动流程
-Spring 的单例实现原理
-Spring 框架中用到了哪些设计模式
+如何自定义注解实现功能 -- 反射，通过Class、Feild、Method对象的getAnnotation
+Spring MVC 运行流程 -- DispatchServlet到handlerAdapter再到handlerMapping再到Controller再到可能的视图解析器
+Spring MVC 启动流程 -- handlerMapping
+Spring 的单例实现原理 -- lazy init
+Spring 框架中用到了哪些设计模式 -- 单例，工厂，代理，模板
 Spring 其他产品Srping Boot、Spring Cloud、Spring Secuirity、Spring Data、Spring AMQP 等
 ### Netty
-为什么选择 Netty
-说说业务中，Netty 的使用场景
-原生的 NIO 在 JDK 1.7 版本存在 epoll bug
-什么是TCP 粘包/拆包
-TCP粘包/拆包的解决办法
-Netty 线程模型
-说说 Netty 的零拷贝
-Netty 内部执行流程
-Netty 重连实现
+为什么选择 Netty -- 基于事件，高性能，源码规范清晰，定义编码模型，与Mina开发者同一人，Netty更新，开箱即用的组件
+说说业务中，Netty 的使用场景 -- Spring 5.0的Reactor模型，自己处理I/O，替换Tomcat等
+原生的 NIO 在 JDK 1.7 版本存在 epoll bug -- 
+什么是TCP 粘包/拆包 -- TCP协议本身存在粘包/拆包问题
+TCP粘包/拆包的解决办法 -- 1、固定长度 2、行分隔符 3、特定分隔符 4、报文头、报文体，头里面记录长度
+Netty 线程模型 -- BIO为1：n模型，NIO为1：n或n：n
+说说 Netty 的零拷贝 -- ByteBuf是利用了堆外的直接内存，这样就让OS有机会实现从内核态到用户态的零拷贝（直接映射）
+Netty 内部执行流程 -- channel，channelPipline
+Netty 重连实现 -- Client在connect的时候可以注册事件监听，会返回Future，可以判断连接成功否
 
 ## 分布式篇
 ### 微服务
-前后端分离是如何做的
-微服务哪些框架
-你怎么理解 RPC 框架
-说说 RPC 的实现原理
+前后端分离是如何做的 -- 各自独立部署，通过HTTP接口调用
+微服务哪些框架 -- Spring Cloud，Dubbo，Sofa，美团的
+你怎么理解 RPC 框架 -- 其实跟HTTP差不多，主要是自定义协议
+说说 RPC 的实现原理 -- 底层基于Socket（TCP/IP）
 说说 Dubbo 的实现原理
 你怎么理解 RESTful
 说说如何设计一个良好的 API
@@ -175,38 +176,28 @@ HTTPS 降级攻击
 说说你项目中的领域建模
 说说概要设计
 #### 设计模式
-你项目中有使用哪些设计模式？单例，工厂，策略，模板，代理，构建器，装饰
+你项目中有使用哪些设计模式？ -- 单例，工厂，策略，模板，代理，构建器，装饰
 说说常用开源框架中设计模式使用分析？
 说说你对设计原则的理解？
 23种设计模式的设计理念
 设计模式之间的异同，例如策略模式与状态模式的区别策略本身封装了算法，将策略传入程序并直接执行即可，状态则是程序本身的逻辑转换
 设计模式之间的结合，例如策略模式+简单工厂模式的实践
 设计模式的性能，例如单例模式哪种性能更好？双检锁或静态内部类
-业务工程
+
 
 你系统中的前后端分离是如何做的
-说说你的开发流程MRD，PRD，需求评审，设计评审，单元测试，代码review
-你和团队是如何沟通的Jira，Confilunce
-你如何进行代码评审reviewboard，代码讲解
-说说你对技术与业务的理解基础：技术服务于业务，进阶：技术推动业务，高阶：技术产生业务
-说说你在项目中经常遇到的 Exception
-说说你在项目中遇到感觉最难Bug，怎么解决的最难的都是线上不能复现的问题，加日志
+说说你的开发流程？ -- MRD，PRD，需求评审，设计评审，单元测试，代码review
+你和团队是如何沟通的？ -- Jira，Confilunce
+你如何进行代码评审？ -- reviewboard，代码讲解
+说说你对技术与业务的理解基础？ -- 技术服务于业务，进阶：技术推动业务，高阶：技术产生业务
+说说你在项目中遇到感觉最难Bug，怎么解决的？ -- 最难的都是线上不能复现的问题，加日志
 说说你在项目中遇到印象最深困难，怎么解决的
 你觉得你们项目还有哪些不足的地方
-你是否遇到过 CPU 100% ，如何排查与解决首先恢复线上服务，top -h，jstat -gcutil，jstack
-你是否遇到过 内存 OOM ，如何排查与解决首先恢复线上服务，jps，jmap，mat
-说说你对敏捷开发的实践Jira
-说说你对开发运维的实践DevOps，结合自己的阿里云ECS阐述
+你是否遇到过 CPU 100% 如何排查与解决？ -- 首先恢复线上服务，top -h，jstat -gcutil，jstack
+你是否遇到过 内存 OOM 如何排查与解决？ -- 首先恢复线上服务，jps，jmap，mat
+说说你对敏捷开发的实践 -- Jira，Confluence
+说说你对开发运维的实践DevOps -- 结合自己的阿里云ECS阐述
 介绍下工作中的一个对自己最有价值的项目，以及在这个过程中的角色桥接SpringMVC与Stripes，技术构想，验证，选型，开发，测试，上线
-## 软实力
-说说你的亮点？
-说说你最近在看什么书？
-说说你觉得最有意义的技术书籍？Java编程思想
-工作之余做什么事情？
-说说个人发展方向方面的思考？架构师
-说说你认为的服务端开发工程师应该具备哪些能力？
-说说你认为的架构师是什么样的，架构师主要做什么？所有脱离业务的架构都是耍流氓
-说说你所理解的技术专家？基础，技术广度、深度，术业专攻
 
 
 1、Java开发中用得最多的数据结构有哪些？
@@ -221,8 +212,6 @@ HTTPS 降级攻击
 5、开发中用了哪些数据库?存储引擎有哪些？悲观锁乐观锁的场景？
 6、SpringMVC以及Mybatis实现原理，是否看过底层源码？
 7、Redis中的数据类型，事务，使用场景？
-
-
 
 
 
