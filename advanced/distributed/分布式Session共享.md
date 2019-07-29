@@ -1,5 +1,5 @@
  
-# 分布式Session共享解决方案
+## 分布式Session共享解决方案
 
  1.session复制： 
     直接利用web容器的session复制功能，在集群中的几台服务器之间同步session对象，使得每台服务器上都保存所有的session信息， 

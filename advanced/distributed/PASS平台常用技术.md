@@ -14,7 +14,7 @@ Infrastructure（基础设施）-as-a-Service
 
  * 容器：docker、garden
  
- * 服务编排：kubernetes、swarm
+ * 服务编排：kubernetes、swarm、KVM
  
  * 分布式协同（分布式锁）：ZooKeeper（Apache）、Chubby（Google）
  
