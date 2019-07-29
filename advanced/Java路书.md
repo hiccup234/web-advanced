@@ -52,7 +52,7 @@ JVM内存模型，GC机制和原理？ -- JMM，内存一致性模型，happens-
 GC分哪两种？Minor GC 和Full GC有什么区别？什么时候会触发Full GC？分别采用什么算法？ -- 引用计数、可达性分析；标记-复制，标记-清除，标记-压缩-清除
 StackOverflow异常有没有遇到过？⼀般你猜测会在什么情况下被触发？如何指定⼀个线程的堆栈⼤⼩？⼀般你们写多少？
  -- 栈内存溢出，一般递归过深或没有出口，参数个数过多，-Xss
- 
+ 线上FullGC频繁，如何排查？ -- -XX:HeapDumpBeforeFullGC（https://blog.csdn.net/wilsonpeng3/article/details/70064336/）
 ### 性能优化
 性能指标有哪些 -- QPS、TPS、PV、UV
 如何发现性能瓶颈 -- IO/CPU，内存，GC，延迟
@@ -63,9 +63,9 @@ StackOverflow异常有没有遇到过？⼀般你猜测会在什么情况下被�
 说说你对敏捷开发的实践？ -- Jira，Confluence
 说说你对开发运维的实践DevOps？ -- 结合自己的阿里云ECS阐述
 介绍下工作中的一个对自己最有价值的项目，以及在这个过程中的角色？ -- 桥接SpringMVC与Stripes，技术构想，验证，选型，开发，测试，上线
-知道osgi吗? 它是如何实现的?
-请问你做过哪些JVM优化?使用什么方法达到什么效果?
-Class.forName("java.lang.String")和String.class.getClassLoader().loadClass("java.lang.String") 什么区别啊?
+知道osgi吗？ 它是如何实现的？
+请问你做过哪些JVM优化？使用什么方法达到什么效果？ -- JVM逆向调优，一切以节省内存为目的，不固定堆大小，newRatio=1，晋升Age设为30、60，然而一顿操作猛如虎
+Class.forName("java.lang.String")和String.class.getClassLoader().loadClass("java.lang.String") 什么区别啊？
 Tomcat的运行机制？分析Tomcat线程模型？Tomcat系统参数和调优？
 ## 核心篇
 ### 数据存储
@@ -214,7 +214,7 @@ HTTPS 降级攻击
    
 4、Http协议，Https呢？Get和Post的区别，Tcp/Ip协议，3次握手，4次挥手，以及滑动窗口机制？
     超文本传输协议，加密的超文本
-5、开发中用了哪些数据库?存储引擎有哪些？悲观锁乐观锁的场景？
+5、开发中用了哪些数据库？存储引擎有哪些？悲观锁乐观锁的场景？
 6、SpringMVC以及Mybatis实现原理，是否看过底层源码？
 7、Redis中的数据类型，事务，使用场景？
 
@@ -335,44 +335,44 @@ JDBC4.0已经不用依赖Class.forName，可以使用SPI来加载破坏双亲委
 
 RPC通信原理，分布式通信原理
 
-分布式寻址方式都有哪些算法？知道一致性hash吗?手写一下java实现代码??你若userId取摸分片，那我要查一段连续时间里的数据怎么办???
+分布式寻址方式都有哪些算法？知道一致性hash吗？手写一下java实现代码？？你若userId取摸分片，那我要查一段连续时间里的数据怎么办？？？
 
 如何解决分库分表主键问题，有什么实现方案？ -- 自增主键固定步长，雪花算法
 
-redis和memcheched 什么区别为什么单线程的redis比多线程的memched效率要高啊?
-redis有什么数据类型都在哪些场景下使用啊?
+redis和memcheched 什么区别为什么单线程的redis比多线程的memched效率要高啊？
+redis有什么数据类型都在哪些场景下使用啊？
 
-reids的主从复制是怎么实现的redis的集群模式是如何实现的呢redis的key是如何寻址的啊?
+reids的主从复制是怎么实现的redis的集群模式是如何实现的呢redis的key是如何寻址的啊？
 
-使用redis如何设计分布式锁?使用zk可以吗?如何实现啊这两种哪个效率更高啊??
+使用redis如何设计分布式锁？使用zk可以吗？如何实现啊这两种哪个效率更高啊？？
 
-知道redis的持久化吗都有什么缺点优点啊? 具体底层实现呢?
+知道redis的持久化吗都有什么缺点优点啊？ 具体底层实现呢？
 
-redis过期策略都有哪些LRU 写一下java版本的代码吧??
+redis过期策略都有哪些LRU 写一下java版本的代码吧？？
 
-说一下dubbo的实现过程注册中心挂了可以继续通信吗??
+说一下dubbo的实现过程注册中心挂了可以继续通信吗？？
 
-dubbo支持哪些序列化协议?hessian 说一下hessian的数据结构PB知道吗为啥PB效率是最高的啊??
+dubbo支持哪些序列化协议？hessian 说一下hessian的数据结构PB知道吗为啥PB效率是最高的啊？？
 
-知道netty吗'netty可以干嘛呀NIO,BIO,AIO 都是什么啊有什么区别啊?
+知道netty吗'netty可以干嘛呀NIO,BIO,AIO 都是什么啊有什么区别啊？
 
-dubbo复制均衡策略和高可用策略都有哪些啊动态代理策略呢?
+dubbo复制均衡策略和高可用策略都有哪些啊动态代理策略呢？
 
-为什么要进行系统拆分啊拆分不用dubbo可以吗'dubbo和thrift什么区别啊?
+为什么要进行系统拆分啊拆分不用dubbo可以吗'dubbo和thrift什么区别啊？
 
-为什么使用消息队列啊消息队列有什么优点和缺点啊?
+为什么使用消息队列啊消息队列有什么优点和缺点啊？
 
 如何保证消息队列的高可用啊如何保证消息不被重复消费啊
 
-kafka ，activemq,rabbitmq ，rocketmq都有什么优点，缺点啊???
+kafka ，activemq,rabbitmq ，rocketmq都有什么优点，缺点啊？？？
 
-如果让你写一个消息队列，该如何进行架构设计啊?说一下你的思路
+如果让你写一个消息队列，该如何进行架构设计啊？说一下你的思路
 
 
-http的工作流程?? ?http1.0 http1.1http2.0 具体哪些区别啊?
+http的工作流程？？ ？http1.0 http1.1http2.0 具体哪些区别啊？
 
 TCP三次握手，四层挥手的工作流程画一下流程图，为什么不是四次五次或者二次啊？
-画一下https的工作流程?具体如何实现？如何防止被抓包啊？
+画一下https的工作流程？具体如何实现？如何防止被抓包啊？
 
 系统架构如何选择合适日志技术log4j、log4j2、slf4j、jcl…….
 
@@ -396,17 +396,17 @@ mysql的索引原理，索引是怎么实现的
 
 springboot如何快速构建系统
 
-zk原理知道吗zk都可以干什么Paxos算法知道吗?说一下原理和实现?
+zk原理知道吗zk都可以干什么Paxos算法知道吗？说一下原理和实现？
 
-如果让你写一个消息队列，该如何进行架构设计啊?说一下你的思路
+如果让你写一个消息队列，该如何进行架构设计啊？说一下你的思路
 
-分布式事务知道吗? 你们怎么解决的?
-
-请问你做过哪些JVM优化?使用什么方法达到什么效果?
+分布式事务知道吗？ 你们怎么解决的？
 
 
 
-1、Dubbo的超时重试？
+
+
+1、Dubbo的超时重试？ -- retry
 2、如何保障请求的执行顺序？
 3、分布式事务与分布式锁？
 4、分布式session管理？
@@ -414,7 +414,7 @@ zk原理知道吗zk都可以干什么Paxos算法知道吗?说一下原理和实�
 6、Mybatis如何分页？如何设置缓存？Mysql分页？
 7、IO？NIO？阻塞与非阻塞的区别？
 8、分布式接口的幂等性设计？不能重复扣款
-9、JVM老年代与新生代的比例？ YGC与FGC发生在哪些场景?
+9、JVM老年代与新生代的比例？ YGC与FGC发生在哪些场景？
 10、Jstack,jmap,jutil分别的意义？如何线上排查JVM的相关问题？
 11、线程池的构造器的5个参数及其具体意义？
 12、单机上一个线程池正在处理请求，如果忽然断电会怎样？正在处理的任务和阻塞队列里的请求怎么处理？
@@ -423,11 +423,6 @@ zk原理知道吗zk都可以干什么Paxos算法知道吗?说一下原理和实�
 
 
 
-
-JVM面试题
-1、你知道哪些或者你们线上使⽤什么GC策略？它有什么优势，适⽤于什么场景？
-参考 触发JVM进行Full GC的情况及应对策略。
-https://blog.csdn.net/chenleixing/article/details/46706039/
 
 2、Java类加载器包括⼏种？它们之间的⽗⼦关系是怎么样的？双亲委派机制是什么意思？有什么好处？
 启动Bootstrap类加载、扩展Extension类加载、系统System类加载。
@@ -446,15 +441,6 @@ https://blog.csdn.net/javazejian/article/details/73413292/
 加载一个加密的网络class文件
 热部署加载class文件
 
-4、堆内存设置的参数是什么？
--Xmx 设置堆的最大空间大小
--Xms 设置堆的最小空间大小
-
-5、Perm Space中保存什么数据？会引起OutOfMemory吗？
-加载class文件。
-会引起，出现异常可以设置 -XX:PermSize 的大小。JDK 1.8后，字符串常量不存放在永久带，而是在堆内存中，JDK8以后没有永久代概念，而是用元空间替代，元空间不存在虚拟机中，二是使用本地内存。
-详细查看Java8内存模型—永久代(PermGen)和元空间(Metaspace)
-https://www.cnblogs.com/paddix/p/5309550.html/
 
 6、做GC时，⼀个对象在内存各个Space中被移动的顺序是什么？
 标记清除法，复制算法，标记整理、分代算法。
@@ -466,28 +452,16 @@ http://www.cnblogs.com/dolphin0520/p/3783345.htmll/
 
 7、你有没有遇到过OutOfMemory问题？你是怎么来处理这个问题的？处理 过程中有哪些收获？
 permgen space、heap space 错误。
-常见的原因
+常见的原因：
 内存加载的数据量太大：一次性从数据库取太多数据；
 集合类中有对对象的引用，使用后未清空，GC不能进行回收；
 代码中存在循环产生过多的重复对象；
 启动参数堆内存值小。
-详见 Java 内存溢出java.lang.OutOfMemoryError的常见情况和处理方式总结。
 http://outofmemory.cn/c/java-outOfMemoryError/
 
-8、JDK 1.8之后Perm Space有哪些变动? MetaSpace⼤⼩默认是⽆限的么? 还是你们会通过什么⽅式来指定⼤⼩?
-JDK 1.8后用元空间替代了 Perm Space；字符串常量存放到堆内存中。
-MetaSpace大小默认没有限制，一般根据系统内存的大小。JVM会动态改变此值。
--XX:MetaspaceSize：分配给类元数据空间以字节计的初始大小Oracle逻辑存储上的初始高水位，the initial high-water-mark。此值为估计值，MetaspaceSize的值设置的过大会延长垃圾回收时间。垃圾回收过后，引起下一次垃圾回收的类元数据空间的大小可能会变大。
--XX:MaxMetaspaceSize：分配给类元数据空间的最大值，超过此值就会触发Full GC，此值默认没有限制，但应取决于系统内存的大小。JVM会动态地改变此值。
 
-9、jstack 是⼲什么的? jstat 呢？如果线上程序周期性地出现卡顿，你怀疑可 能是 GC 导致的，你会怎么来排查这个问题？线程⽇志⼀般你会看其中的什么 部分？
-jstack 用来查询 Java 进程的堆栈信息。
-jvisualvm 监控内存泄露，跟踪垃圾回收、执行时内存、cpu分析、线程分析。
-详见Java jvisualvm简要说明，可参考 线上FullGC频繁的排查。
-Java jvisualvm简要说明
-https://blog.csdn.net/a19881029/article/details/8432368/
-线上FullGC频繁的排查
-https://blog.csdn.net/wilsonpeng3/article/details/70064336/
+
+
 
 
 
