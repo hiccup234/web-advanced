@@ -1,7 +1,7 @@
 
 ## Java路书
 
-Java：集合框架，反射，锁，多线程和Java线程模型，IO/Socket，RMI，EJB，JDBC，OSGI，JMM、JVM、类加载器、Java字节码技术
+Java：集合框架，反射，泛型，锁，多线程和Java线程模型，IO/Socket，RMI，EJB，JDBC，OSGI，JMM、JVM、类加载器、Java字节码技术
 
 架构师TOGAF证书
 掘金小册 -- Netty OK
@@ -10,19 +10,21 @@ Java技术栈公众号 -- 年度总结
 
 UML是统一建模语言，常用图包括：用例图,静态图(包括类图、对象图和包图),行为图,交互图(顺序图,合作图),实现图。
     
-创建工程的脚手架
+创建工程的脚手架 
+
+C4模型
 
 
 ## 基础篇
 ### 基础知识
 面向对象的特征？ -- 抽象，封装，继承，多态（RTTI，对象头类型指针）
-final, finally, finalize 的区别？
+final, finally, finalize 的区别？ -- finalize在GC时调用且只会调用一次
 int 和 Integer 有什么区别？ -- 占用内存字节数，对象头
 重载和重写的区别？ -- 构造器不能重写，通过super调用父类构造器
-抽象类和接口有什么区别？
+抽象类和接口有什么区别？ -- 接口default方法
 说说反射的用途及实现？ -- 动态创建对象、访问字段、调用方法，采用委派模式实现=本地实现+动态实现，即JVM里C++和动态生成字节码
-说说自定义注解的场景及实现？
-equals 与 == 的区别？
+说说自定义注解的场景及实现？ -- @NoSSO @SPI
+equals 与 == 的区别？ -- equals与hashCode
 JDBC 流程？ -- 加载驱动，获取连接，prepareStatement，得到执行结果（由Class.forName引出SPI，再引出破坏双亲委派，线程上下文类加载器）
 MVC 设计思想？ -- 模型、视图、控制器，随着前后端分离已经过时，目前流行RPC
 HTTP 请求的 GET 与 POST 方式的区别？
@@ -32,6 +34,7 @@ List 和 Set 区别？List 和 Map 区别？ -- List线性表，Set不允许重�
 ArrayList 与 LinkedList 区别？ArrayList 与 Vector 区别？
 HashMap 和 HashTable 的区别？HashSet 和 HashMap 区别？HashMap 和 ConcurrentHashMap 的区别？
 HashMap 的工作原理及代码实现？ConcurrentHashMap 的工作原理及代码实现？
+
 ### 锁&&线程&&JVM
 创建线程的方式及实现？ -- 继承Thread，实现Runnable，实现Callable；但是Java中线程的表示只有一种，即Thread类
 sleep()、wait()、join()、yield()有什么区别？ -- wait释放锁，sleep、yield不释放锁，join底层循环调用wait
@@ -67,6 +70,7 @@ StackOverflow异常有没有遇到过？⼀般你猜测会在什么情况下被�
 请问你做过哪些JVM优化？使用什么方法达到什么效果？ -- JVM逆向调优，一切以节省内存为目的，不固定堆大小，newRatio=1，晋升Age设为30、60，然而一顿操作猛如虎
 Class.forName("java.lang.String")和String.class.getClassLoader().loadClass("java.lang.String") 什么区别啊？
 Tomcat的运行机制？分析Tomcat线程模型？Tomcat系统参数和调优？
+
 ## 核心篇
 ### 数据存储
 MySQL 索引使用的注意事项？ -- 增加索引、索引覆盖、最左原则、索引前缀（like的前面不能放%）、索引条件下推
