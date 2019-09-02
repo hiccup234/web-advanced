@@ -7,4 +7,7 @@ package top.hiccup.servlet;
  * @date 2018/12/30
  */
 public class ConfigInitializer {
+    static {
+        System.out.println("Load app ConfigInitializer..");
+    }
 }

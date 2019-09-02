@@ -26,9 +26,9 @@ import javax.servlet.http.HttpServletResponse;
 public class NewFeatureTest extends HttpServlet {
 
     /**
-     *  通过方法可以看出servlet立马返回了，但没有关闭响应流，只是把response响应传给了异步线程，异步线程再继续输出，
-     *  我们可以将比较费资源消耗时间的程序放到异步线程去处理，这样很大程度上节省了servlet资源。
-     *  Springmvc3.2开始也加入了servlet3异步处理这个特性
+     * 通过方法可以看出servlet立马返回了，但没有关闭响应流，只是把response响应传给了异步线程，异步线程再继续输出，
+     * 我们可以将比较费资源消耗时间的程序放到异步线程去处理，这样很大程度上节省了servlet资源。
+     * SpringMVC3.2开始也加入了servlet3异步处理这个特性
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

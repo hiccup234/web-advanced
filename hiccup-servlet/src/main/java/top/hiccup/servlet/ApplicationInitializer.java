@@ -10,13 +10,13 @@ import javax.servlet.annotation.HandlesTypes;
 /**
  * 遵循servlet3.0规范的应用初始化器，可以替代web.xml动态的完成对listener，filter，servlet的注册和启动。
  *
- * 路径 META-INF/services/javax.servlet.ServletContainerInitializer
- * 必须放在jar包下，放在classpath的War中不会生效。
+ * 路径 META-INF/services/javax.servlet.ServletContainerInitializer 文件
+ * 必须放在jar包下，放在classpath的War中不会生效。（不明白为什么？？TODO）
  *
- * 注意：WEB-INF/web.xml和WebApplicationInitializer不是相斥的。
+ * 注意：WEB-INF/web.xml和 WebApplicationInitializer不是相斥的。
  *      例如web.xml可以注册一个servlet，ServletContainerInitializer也可以注册另外一个servlet。
  *      甚至可以通过方法ServletContext#getServletRegistration(String)来修改web.xml中的注册信息。
- *      然而，若应用中出现web.xml，它的<web-app version>属性必须设置成3.0或者以上，否则ServletContainerInitializer将会在servlet容器启动时被忽略。
+ *      若应用中出现web.xml，它的<web-app version>属性必须设置成3.0或者以上，否则ServletContainerInitializer将会在servlet容器启动时被忽略。
  *
  * @author wenhy
  * @date 2018/12/30
@@ -33,6 +33,6 @@ public class ApplicationInitializer implements ServletContainerInitializer {
      */
     @Override
     public void onStartup(Set<Class<?>> c, ServletContext ctx) throws ServletException {
-        System.out.println("FFFFFFFFFFFFFFFFFFFFFFFFFFF");
+        System.out.println("ServletContainerInitializer startup..");
     }
 }
