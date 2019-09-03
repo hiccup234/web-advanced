@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>servlet</module>
+        <module>hiccup-servlet</module>
         <module>mvc</module>
         <module>spring-boot</module>
         <module>ratel-boot</module>
