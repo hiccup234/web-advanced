@@ -1,5 +1,5 @@
 
-# Docker原理
+## Docker原理
 
     计算单元，容器化，轻量级虚拟机环境（没有guest OS），利用了Linux 的 namespace、cgroups、chroot
 

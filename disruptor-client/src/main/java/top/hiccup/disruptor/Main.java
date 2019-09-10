@@ -1,4 +1,4 @@
-package com.hiccup.disruptor.multi;
+package top.hiccup.disruptor;
 
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
@@ -11,6 +11,8 @@ import com.lmax.disruptor.SequenceBarrier;
 import com.lmax.disruptor.WorkerPool;
 import com.lmax.disruptor.YieldingWaitStrategy;
 import com.lmax.disruptor.dsl.ProducerType;
+import top.hiccup.disruptor.multi.Consumer;
+import top.hiccup.disruptor.multi.OrderItem;
 
 /**
  *

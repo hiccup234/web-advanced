@@ -1,18 +1,45 @@
 
 ## Java路书
-
-Java：集合框架，反射，泛型，锁，多线程和Java线程模型，IO/Socket，RMI，EJB，JDBC，OSGI，JMM、JVM、类加载器、Java字节码技术
+Java基础：集合框架，反射，泛型，锁，多线程和Java线程模型，IO/Socket，RMI，EJB，JDBC，OSGI，JMM、JVM、类加载器、Java字节码技术
 
 架构师TOGAF证书
-掘金小册 -- Netty OK
-极客时间
-Java技术栈公众号 -- 年度总结
+掘金小册 -- Netty OK  \  极客时间  \  Java技术栈公众号 -- 年度总结
 
-UML是统一建模语言，常用图包括：用例图,静态图(包括类图、对象图和包图),行为图,交互图(顺序图,合作图),实现图。
+UML统一建模语言的常用图包括：用例图、静态图(包括类图、对象图和包图)、行为图、交互图(顺序图、合作图)、实现图。  C4模型：类似地图定位的缩放形势
     
-创建工程的脚手架 
+创建工程的脚手架  done
 
-C4模型
+### 2019进阶路书：
+1、二刷《极客时间--组成原理》 9.15前完成
+2、二刷《深入理解JVM》 9.20前完成
+3、二刷《极客时间--Java核心技术36讲》 + 《极客时间--深入拆解Java虚拟机》 9.30前完成
+
+4、看完《鸟哥Linux私房菜》 国庆放假看
+5、二刷《极客时间--数据结构与算法》 国庆放假看
+6、Redis还要买本书看，MongoDB也要学习
+7、Zookeeper + Dubbo 学习
+8、Spring源码学习
+
+二刷《高性能MySQL》 + 《极客时间--MySQL36讲》
+看完《极客时间--计算机网络》 + 《极客时间--网络编程》 + 《极客时间--IM通讯》
+
+二刷《极客时间--操作系统》
+
+复习+精通 XML，Spring扩展时候用得到
+复习 UML，学会画架构图，vivso等
+
+### 技术输出
+1、Disruptor高性能分析总结
+2、Kafka高性能原理总结
+3、搭建工程脚手架
+4、推行C4模型
+5、推行技术分享
+6、推行个人博客，技术文章
+
+
+
+
+
 
 
 ## 基础篇
@@ -34,8 +61,7 @@ List 和 Set 区别？List 和 Map 区别？ -- List线性表，Set不允许重�
 ArrayList 与 LinkedList 区别？ArrayList 与 Vector 区别？
 HashMap 和 HashTable 的区别？HashSet 和 HashMap 区别？HashMap 和 ConcurrentHashMap 的区别？
 HashMap 的工作原理及代码实现？ConcurrentHashMap 的工作原理及代码实现？
-
-### 锁&&线程&&JVM
+### 锁 && 线程 && JVM
 创建线程的方式及实现？ -- 继承Thread，实现Runnable，实现Callable；但是Java中线程的表示只有一种，即Thread类
 sleep()、wait()、join()、yield()有什么区别？ -- wait释放锁，sleep、yield不释放锁，join底层循环调用wait
 说说 CountDownLatch 原理？说说 CyclicBarrier 原理？说说 Semaphore 原理？说说 Exchanger 原理？
@@ -190,7 +216,7 @@ HTTPS 降级攻击
 你如何划分领域边界
 说说你项目中的领域建模 -- DDD
 说说概要设计
-#### 设计模式
+### 设计模式
 你项目中有使用哪些设计模式？ -- 单例，工厂，代理，策略，门面，模板，构建器，装饰
 说说常用开源框架中设计模式使用分析？ -- Spring中单例、工厂、代理、模板，MyBatis中代理，Lombok中构建器，JDK容器中装饰
 说说你对设计原则的理解？ -- 单一职责，依赖倒置(IOC)，迪米特，开闭，里氏替换，接口隔离
@@ -208,22 +234,18 @@ HTTPS 降级攻击
 
 
 
-
+### 面试提问
 1、Java开发中用得最多的数据结构有哪些？
     ArrayList，HashMap
 2、谈谈对HashMap的理解，底层数据结构，怎么解决Hash碰撞，HashMap是线程安全的吗？HashTable呢？JUC里的并发容器？
     哈希表的一种实现方式，底层数组+链表
 3、谈谈JMM，说说类的加载过程，GC以及内存管理，平时在Tomcat里有没有配置过相关JVM参数，以及性能调优？
-    重排序，volatile守护上下文，内存屏障；加载、链接验证，解析，准备、初始化
-   
+    重排序，volatile守护上下文，内存屏障；加载、链接（验证，准备，解析）、初始化
 4、Http协议，Https呢？Get和Post的区别，Tcp/Ip协议，3次握手，4次挥手，以及滑动窗口机制？
     超文本传输协议，加密的超文本
 5、开发中用了哪些数据库？存储引擎有哪些？悲观锁乐观锁的场景？
 6、SpringMVC以及Mybatis实现原理，是否看过底层源码？
 7、Redis中的数据类型，事务，使用场景？
-
-
-
 
 ### 蚂蚁金服面试问题
 #### Java多线程
@@ -294,8 +316,11 @@ HTTPS 降级攻击
 
 如何进行JVM调优工作的？
 调优在线上生产环境的机会比较少，只跟我们的架构师一起分析过2次线上服务挂掉的问题，另外就是自己本机实验调优：
-1、服务502，CPU狂飙到1000%，首先恢复线上服务，然后再分析，通过jstack得到线程栈日志发现大量的tomcat http线程阻塞在log4j的callAppenders，要获取RootLogger对象锁因为是同步方法，而最近加了一个APP端调用的接口，打了日志logger.info()，而这个接口访问量非常大，锁竞争激烈导致其他线程都阻塞挂起了，解决办法就是去掉那个接口的日志打印并且给日志加上缓冲，或则可以考虑用线程异步打印日志。
-2、服务502，CPU偏高，搜索日志有OOM，jmap -dump:live,format=b,file=test.bin Vmid拿到dump文件，MAT分析发现是ThreadLocal引起的内存泄漏，线程池有ThreadLocal<LinkedList>没有remove导致的也是跟打印日志有关系。
+1、服务502，CPU狂飙到1000%，首先恢复线上服务，然后再分析，通过jstack得到线程栈日志发现大量的tomcat http线程阻塞在log4j的callAppenders，
+要获取RootLogger对象锁因为是同步方法，而最近加了一个APP端调用的接口，打了日志logger.info()，而这个接口访问量非常大，锁竞争激烈导致其他线程都阻塞挂起了，
+解决办法就是去掉那个接口的日志打印并且给日志加上缓冲，或则可以考虑用线程异步打印日志。
+2、服务502，CPU偏高，搜索日志有OOM，jmap -dump:live,format=b,file=test.bin Vmid拿到dump文件，MAT分析发现是ThreadLocal引起的内存泄漏，
+线程池有ThreadLocal<LinkedList>没有remove导致的也是跟打印日志有关系。
 
 单例：饥饿，懒汉，双检锁，静态内部类和枚举
 工厂：Spring就是一个超级工厂，工厂模式下代码需要跟具体工厂耦合，抽象工厂更加解耦
@@ -310,7 +335,6 @@ HTTPS 降级攻击
 NoSQL与关系型数据库区别？
 DB主要存储结构化数据，有表结构的定义，要符合第一二三范式
 NoSQL主要存储非结构化数据，如key-value，按文件存储等
-
 
 1、为什么JDBC的驱动类只能通过Class.forName()加载？一般加载类有三种方式
     a.通过new关键字的加载、连接、初始化【当前类加载器】
@@ -329,13 +353,6 @@ JDBC4.0已经不用依赖Class.forName，可以使用SPI来加载破坏双亲委
     数据库设计中也常用bigint来表示价格从基本单位表示起，1元=100分
     
 5、各版本HashMap变化对比，什么时候用LinkedHashMap，ConcurrentHashMap？
-
-
-
-
-
-
-
 
 RPC通信原理，分布式通信原理
 
@@ -406,10 +423,6 @@ zk原理知道吗zk都可以干什么Paxos算法知道吗？说一下原理和�
 
 分布式事务知道吗？ 你们怎么解决的？
 
-
-
-
-
 1、Dubbo的超时重试？ -- retry
 2、如何保障请求的执行顺序？
 3、分布式事务与分布式锁？
@@ -424,8 +437,6 @@ zk原理知道吗zk都可以干什么Paxos算法知道吗？说一下原理和�
 12、单机上一个线程池正在处理请求，如果忽然断电会怎样？正在处理的任务和阻塞队列里的请求怎么处理？
 13、快速排序？广度优先搜索队列实现
 14、设计一个对外的接口，在1，2，3这三个主机上(IP不同)实现负载均衡和顺序轮询机制，需要考虑并发？
-
-
 
 
 2、Java类加载器包括⼏种？它们之间的⽗⼦关系是怎么样的？双亲委派机制是什么意思？有什么好处？
@@ -445,7 +456,6 @@ https://blog.csdn.net/javazejian/article/details/73413292/
 加载一个加密的网络class文件
 热部署加载class文件
 
-
 6、做GC时，⼀个对象在内存各个Space中被移动的顺序是什么？
 标记清除法，复制算法，标记整理、分代算法。
 新生代一般采用复制算法 GC，老年代使用标记整理算法。
@@ -454,7 +464,7 @@ CMSCurrent Mark Sweep收集器是一种以获取最短回收停顿时间为目�
 详见 Java GC机制。
 http://www.cnblogs.com/dolphin0520/p/3783345.htmll/
 
-7、你有没有遇到过OutOfMemory问题？你是怎么来处理这个问题的？处理 过程中有哪些收获？
+7、你有没有遇到过OutOfMemory问题？你是怎么来处理这个问题的？处理过程中有哪些收获？
 permgen space、heap space 错误。
 常见的原因：
 内存加载的数据量太大：一次性从数据库取太多数据；
@@ -462,12 +472,5 @@ permgen space、heap space 错误。
 代码中存在循环产生过多的重复对象；
 启动参数堆内存值小。
 http://outofmemory.cn/c/java-outOfMemoryError/
-
-
-
-
-
-
-
 
 

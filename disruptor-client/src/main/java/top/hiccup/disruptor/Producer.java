@@ -1,4 +1,4 @@
-package com.hiccup.disruptor.multi;
+package top.hiccup.disruptor;
 
 import com.lmax.disruptor.RingBuffer;
 
