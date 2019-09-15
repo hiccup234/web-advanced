@@ -1,6 +1,7 @@
 package top.hiccup.disruptor;
 
 import com.lmax.disruptor.RingBuffer;
+import top.hiccup.disruptor.multi.OrderItem;
 
 /**
  *
@@ -8,11 +9,11 @@ import com.lmax.disruptor.RingBuffer;
 public class Producer {
 
 	private final RingBuffer<OrderItem> ringBuffer;
-	
+
 	public Producer(RingBuffer<OrderItem> ringBuffer){
 		this.ringBuffer = ringBuffer;
 	}
-	
+
 	/**
 	 * onData用来发布事件，每调用一次就发布一次事件
 	 * 它的参数会用过事件传递给消费者

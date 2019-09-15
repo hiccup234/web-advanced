@@ -52,13 +52,13 @@
                 setConnected(true);
                 log('连接成功..');
             };
-            ws.onmessage = function (event) {
-                log('【机器人】\n' + event.data);
+            ws.onmessage = function (myEvent) {
+                log('【机器人】\n' + myEvent.data);
             };
-            ws.onclose = function (event) {
+            ws.onclose = function (myEvent) {
                 setConnected(false);
                 log('连接关闭..');
-                // log(event);
+                // log(myEvent);
             };
         }
 
