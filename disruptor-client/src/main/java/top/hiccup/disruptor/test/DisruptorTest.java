@@ -12,7 +12,7 @@ import java.nio.ByteBuffer;
 import java.util.concurrent.*;
 
 /**
- * 线程间队列Disruptor
+ * 线程间队列Disruptor性能测试类
  *
  * @author wenhy
  * @date 2019/9/12
@@ -26,20 +26,22 @@ public class DisruptorTest {
         // 创建事件对象工厂
         EventFactory eventFactory = new MyEventFactory();
         ExecutorService executorService = Common.getExecutorService();
+        // TODO 优化点：创建事件能不能通过拷贝的方式呢？如果每次都new一个对象肯定很慢
         Disruptor<MyEvent> disruptor =
-                new Disruptor<MyEvent>(eventFactory, Common.QUEUE_SIZE, executorService, ProducerType.MULTI, new YieldingWaitStrategy());
+                new Disruptor<MyEvent>(eventFactory, Common.QUEUE_SIZE, executorService, ProducerType.SINGLE, new YieldingWaitStrategy());
         // 注册消费事件的处理器
         disruptor.handleEventsWith(new MyEventHandler());
         // 启动Disruptor
         disruptor.start();
+
         // disruptor发布事件
         RingBuffer<MyEvent> ringBuffer = disruptor.getRingBuffer();
         MyEventProducer producer = new MyEventProducer(ringBuffer);
 
         ByteBuffer byteBuffer = ByteBuffer.allocate(8);
         long startTime = System.currentTimeMillis();
-        for (long l = 0; l <= Common.DATA_SIZE; l++) {
-            byteBuffer.putLong(0, l);
+        for (long a = 0; a <= Common.DATA_SIZE; a++) {
+            byteBuffer.putLong(0, a);
             producer.onData(byteBuffer);
         }
         long costTime = System.currentTimeMillis() - startTime;

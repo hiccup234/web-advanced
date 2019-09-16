@@ -41,6 +41,7 @@ public class Main {
          WaitStrategy yieldingWaitStrategy = new YieldingWaitStrategy();
 
         // 创建disruptor  ProducerType.SINGLE：只有一个生产者 ProducerType.MULTI：有多个生产者
+
         Disruptor<MyEvent> disruptor =
                 new Disruptor<MyEvent>(factory, ringBufferSize, executor, ProducerType.SINGLE, new YieldingWaitStrategy());
         // 注册消费事件的方法

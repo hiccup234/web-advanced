@@ -8,6 +8,14 @@ import top.hiccup.disruptor.test.DisruptorTest;
  */
 public class MyEventHandler implements EventHandler<MyEvent> {
 
+    /**
+     * 基于事件通知的模型，Disruptor接收到消息就调用此方法，通知消费者消费，也可以理解为观察者模式
+     *
+     * @param myEvent
+     * @param sequence
+     * @param endOfBatch
+     * @throws Exception
+     */
     @Override
     public void onEvent(MyEvent myEvent, long sequence, boolean endOfBatch) throws Exception {
 //        System.out.println("接收到：" + event.getEventName());

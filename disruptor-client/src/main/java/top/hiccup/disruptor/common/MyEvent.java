@@ -5,14 +5,14 @@ package top.hiccup.disruptor.common;
  */
 public class MyEvent {
 
-    private Long eventId;
+    private long eventId;
     private String eventName;
 
-    public Long getEventId() {
+    public long getEventId() {
         return eventId;
     }
 
-    public void setEventId(Long eventId) {
+    public void setEventId(long eventId) {
         this.eventId = eventId;
     }
 
