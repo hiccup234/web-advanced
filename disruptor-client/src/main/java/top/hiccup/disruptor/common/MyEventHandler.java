@@ -1,7 +1,7 @@
 package top.hiccup.disruptor.common;
 
 import com.lmax.disruptor.EventHandler;
-import top.hiccup.disruptor.test.DisruptorTest;
+import top.hiccup.disruptor.perftest.DisruptorTest;
 
 /**
  * Created by wenhy on 2018/1/9.
@@ -14,12 +14,12 @@ public class MyEventHandler implements EventHandler<MyEvent> {
      * @param myEvent
      * @param sequence
      * @param endOfBatch
-     * @throws Exception
+     * @throws Exception`
      */
     @Override
     public void onEvent(MyEvent myEvent, long sequence, boolean endOfBatch) throws Exception {
 //        System.out.println("接收到：" + event.getEventName());
-        if (myEvent.getEventId() == 2_000_000) {
+        if (myEvent.getEventId() >= 2_000_000 - 6) {
             DisruptorTest.running = false;
             synchronized (DisruptorTest.lock) {
                 DisruptorTest.lock.notifyAll();

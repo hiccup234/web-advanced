@@ -1,4 +1,4 @@
-package top.hiccup.disruptor.test;
+package top.hiccup.disruptor.perftest;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutorService;
@@ -16,7 +16,7 @@ public class Common {
     /**
      * 数据量
      */
-    public static final long DATA_SIZE = 20_000_000;
+    public static final long DATA_SIZE = 6_000_000;
 
     /**
      * 队列长度

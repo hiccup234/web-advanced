@@ -1,4 +1,4 @@
-package top.hiccup.disruptor.test;
+package top.hiccup.disruptor.perftest;
 
 import com.lmax.disruptor.EventFactory;
 import top.hiccup.disruptor.common.MyEvent;
@@ -16,7 +16,7 @@ import java.util.concurrent.*;
  * @author wenhy
  * @date 2019/9/12
  */
-public class ArrayBlockingQueueTest {
+public class BlockingQueueTest {
 
     private static Object lock = new Object();
     private static volatile boolean running = true;
@@ -25,7 +25,8 @@ public class ArrayBlockingQueueTest {
         // 创建事件对象工厂
         EventFactory<MyEvent> eventFactory = new MyEventFactory();
         // 队列大小要与Disruptor的RingBuffer保持相同
-        ArrayBlockingQueue<MyEvent> arrayBlockingQueue = new ArrayBlockingQueue<MyEvent>(Common.QUEUE_SIZE);
+//        ArrayBlockingQueue<MyEvent> arrayBlockingQueue = new ArrayBlockingQueue<MyEvent>(Common.QUEUE_SIZE);
+        LinkedBlockingQueue<MyEvent> arrayBlockingQueue = new LinkedBlockingQueue<MyEvent>(Common.QUEUE_SIZE);
         long startTime = System.currentTimeMillis();
         // 异步的通过线程池往队列里放事件，否则由于阻塞队列的拒绝策略会导致主线程被阻塞
         new Thread(() -> {
@@ -119,9 +120,5 @@ public class ArrayBlockingQueueTest {
         singleTheradTest();
         // 线程池写读测试
 //        mutliThreadTest();
-
-        while (true) {
-            Thread.sleep(1000);
-        }
     }
 }
