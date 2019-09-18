@@ -16,19 +16,19 @@ public class Common {
     /**
      * 数据量
      */
-    public static final long DATA_SIZE = 6_000_000;
+    public static final int DATA_SIZE = 6_000_000;
 
     /**
      * 队列长度
      */
-    public static final int QUEUE_SIZE = 1024 * 1024;
+    public static final int QUEUE_SIZE = 1 << 15;
 
     /**
      * 创建线程池
      * @return
      */
     public static ExecutorService getExecutorService() {
-        return new ThreadPoolExecutor(4, 100, 60,
+        return new ThreadPoolExecutor(2, 2, 60,
                 TimeUnit.SECONDS, new ArrayBlockingQueue<>(1024),
                 new ThreadPoolExecutor.CallerRunsPolicy());
     }

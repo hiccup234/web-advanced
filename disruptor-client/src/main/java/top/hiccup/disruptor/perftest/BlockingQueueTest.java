@@ -5,65 +5,51 @@ import top.hiccup.disruptor.common.MyEvent;
 import top.hiccup.disruptor.common.MyEventFactory;
 
 import java.io.IOException;
-import java.util.concurrent.*;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutorService;
 
 /**
- * ArrayBlockingQueue性能测试：
- * <p>
- * 1、阻塞队列容量为1024*1024
- * 2、线程池大小为100个线程
+ * JDK阻塞队列性能测试：
  *
  * @author wenhy
  * @date 2019/9/12
  */
 public class BlockingQueueTest {
 
-    private static Object lock = new Object();
-    private static volatile boolean running = true;
-
     private static void singleTheradTest() throws InterruptedException {
-        // 创建事件对象工厂
-        EventFactory<MyEvent> eventFactory = new MyEventFactory();
         // 队列大小要与Disruptor的RingBuffer保持相同
-//        ArrayBlockingQueue<MyEvent> arrayBlockingQueue = new ArrayBlockingQueue<MyEvent>(Common.QUEUE_SIZE);
-        LinkedBlockingQueue<MyEvent> arrayBlockingQueue = new LinkedBlockingQueue<MyEvent>(Common.QUEUE_SIZE);
-        long startTime = System.currentTimeMillis();
-        // 异步的通过线程池往队列里放事件，否则由于阻塞队列的拒绝策略会导致主线程被阻塞
+        final BlockingQueue<MyEvent> blockingQueue = new ArrayBlockingQueue<>(Common.QUEUE_SIZE);
+//        LinkedBlockingQueue<MyEvent> blockingQueue = new LinkedBlockingQueue<MyEvent>(Common.QUEUE_SIZE);
+
+        // 异步的通过线程池往队列里放事件，否则由于阻塞队列的拒绝策略会导致主线程无法继续执行，所以由子线程put事件
+        final long startTime = System.currentTimeMillis();
         new Thread(() -> {
-            for (long a = 0; a <= Common.DATA_SIZE; a++) {
-                MyEvent myEvent = eventFactory.newInstance();
+            for (int a = 0; a <= Common.DATA_SIZE; a++) {
+                MyEvent myEvent = new MyEvent(a, a + "fff");
                 myEvent.setEventId(a);
                 try {
-                    arrayBlockingQueue.put(myEvent);
+                    blockingQueue.put(myEvent);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                }
-            }
-        }).start();
-        new Thread(() -> {
-            for (long a = 0; a <= Common.DATA_SIZE; a++) {
-                MyEvent myEvent = null;
-                try {
-                    myEvent = arrayBlockingQueue.take();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if (myEvent.getEventId() == Common.DATA_SIZE) {
-                    synchronized (lock) {
-                        running = false;
-                        lock.notifyAll();
-                    }
                 }
             }
         }).start();
 
-        synchronized (lock) {
-            while (running) {
-                lock.wait();
+        new Thread(() -> {
+            for (int a = 0; a <= Common.DATA_SIZE; a++) {
+                MyEvent myEvent = null;
+                try {
+                    // 只取出不消費
+                    myEvent = blockingQueue.take();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-        }
-        long costTime = System.currentTimeMillis() - startTime;
-        System.out.println("单线程花费时间：" + costTime);
+            long costTime = System.currentTimeMillis() - startTime;
+            System.out.println("单线程生产者：" + costTime);
+        }).start();
+
     }
 
     private static void mutliThreadTest() throws InterruptedException {
@@ -72,8 +58,8 @@ public class BlockingQueueTest {
         // 队列大小要与Disruptor的RingBuffer保持相同
         ArrayBlockingQueue<MyEvent> arrayBlockingQueue = new ArrayBlockingQueue<MyEvent>(Common.QUEUE_SIZE);
         ExecutorService executor = Common.getExecutorService();
-        long startTime = System.currentTimeMillis();
         // 异步的通过线程池往队列里放事件，否则由于阻塞队列的拒绝策略会导致主线程被阻塞
+        long startTime = System.currentTimeMillis();
         new Thread(() -> {
             for (long a = 0; a <= Common.DATA_SIZE; a++) {
                 MyEvent myEvent = eventFactory.newInstance();
@@ -91,27 +77,14 @@ public class BlockingQueueTest {
             executor.execute(() -> {
                 MyEvent myEvent = null;
                 try {
-                    //
                     myEvent = arrayBlockingQueue.take();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                if (myEvent.getEventId() == Common.DATA_SIZE) {
-                    synchronized (lock) {
-                        running = false;
-                        lock.notifyAll();
-                    }
-                }
             });
         }
-
-        synchronized (lock) {
-            while (running) {
-                lock.wait();
-            }
-        }
         long costTime = System.currentTimeMillis() - startTime;
-        System.out.println("多线程花费时间：" + costTime);
+        System.out.println("多线程生产者：" + costTime);
         executor.shutdown();
     }
 
