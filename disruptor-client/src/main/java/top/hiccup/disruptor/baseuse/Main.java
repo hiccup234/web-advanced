@@ -45,7 +45,7 @@ public class Main {
         Disruptor<MyEvent> disruptor =
                 new Disruptor<MyEvent>(factory, ringBufferSize, executor, ProducerType.SINGLE, new YieldingWaitStrategy());
         // 注册消费事件的方法
-        disruptor.handleEventsWith(new MyEventHandler());
+        disruptor.handleEventsWith(new MyEventHandler(null));
 
         // 启动disruptor
         disruptor.start();

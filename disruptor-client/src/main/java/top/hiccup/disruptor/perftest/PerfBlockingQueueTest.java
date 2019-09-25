@@ -7,6 +7,7 @@ import top.hiccup.disruptor.common.MyEventFactory;
 import java.io.IOException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -15,44 +16,42 @@ import java.util.concurrent.ExecutorService;
  * @author wenhy
  * @date 2019/9/12
  */
-public class BlockingQueueTest {
+public class PerfBlockingQueueTest {
 
-    private static void singleTheradTest() throws InterruptedException {
+    private static long singleProducerTest() throws InterruptedException {
         // 队列大小要与Disruptor的RingBuffer保持相同
         final BlockingQueue<MyEvent> blockingQueue = new ArrayBlockingQueue<>(Common.QUEUE_SIZE);
 //        LinkedBlockingQueue<MyEvent> blockingQueue = new LinkedBlockingQueue<MyEvent>(Common.QUEUE_SIZE);
-
-        // 异步的通过线程池往队列里放事件，否则由于阻塞队列的拒绝策略会导致主线程无法继续执行，所以由子线程put事件
+        CountDownLatch latch = new CountDownLatch(1);
         final long startTime = System.currentTimeMillis();
-        new Thread(() -> {
-            for (int a = 0; a <= Common.DATA_SIZE; a++) {
-                MyEvent myEvent = new MyEvent(a, a + "fff");
-                myEvent.setEventId(a);
-                try {
-                    blockingQueue.put(myEvent);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
 
         new Thread(() -> {
             for (int a = 0; a <= Common.DATA_SIZE; a++) {
-                MyEvent myEvent = null;
                 try {
                     // 只取出不消費
-                    myEvent = blockingQueue.take();
+                    MyEvent myEvent = blockingQueue.take();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
             long costTime = System.currentTimeMillis() - startTime;
-            System.out.println("单线程生产者：" + costTime);
+            System.out.println("单线程生产者耗时：" + costTime);
+            long opsPerSecond = (Common.DATA_SIZE * 1000L) / (System.currentTimeMillis() - startTime);
+            System.out.println("每秒吞吐量：" + opsPerSecond);
+            System.out.println();
+            latch.countDown();
         }).start();
 
+        for (int a = 0; a <= Common.DATA_SIZE; a++) {
+            MyEvent myEvent = new MyEvent();
+            myEvent.setEventId(a);
+            blockingQueue.put(myEvent);
+        }
+        latch.await();
+        return System.currentTimeMillis() - startTime;
     }
 
-    private static void mutliThreadTest() throws InterruptedException {
+    private static void mutliProducerTest() throws InterruptedException {
         // 创建事件对象工厂
         EventFactory<MyEvent> eventFactory = new MyEventFactory();
         // 队列大小要与Disruptor的RingBuffer保持相同
@@ -75,9 +74,8 @@ public class BlockingQueueTest {
         }).start();
         for (long a = 0; a <= Common.DATA_SIZE; a++) {
             executor.execute(() -> {
-                MyEvent myEvent = null;
                 try {
-                    myEvent = arrayBlockingQueue.take();
+                    MyEvent myEvent = arrayBlockingQueue.take();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -89,9 +87,15 @@ public class BlockingQueueTest {
     }
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        // 单线程写单线程读测试
-        singleTheradTest();
-        // 线程池写读测试
+        long costTime = 0;
+        for (int i = 0; i < 10; i++) {
+            // 单线程写单线程读测试
+            costTime += singleProducerTest();
+
+            // 线程池写读测试
 //        mutliThreadTest();
+        }
+        System.out.println("平均耗时：" + costTime / 10);
+        System.out.println("平均每秒吞吐量：" + (Common.DATA_SIZE * 1000L) / (costTime / 10));
     }
 }
