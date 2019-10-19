@@ -1,5 +1,6 @@
 /**
  * 冒险与分支预测：今天下雨了，明天还会下雨吗？
+ * 建议把大循环放在小循环里，更多利用分支预测
  */
 public class BranchPrediction {
     public static void main(String args[]) {
