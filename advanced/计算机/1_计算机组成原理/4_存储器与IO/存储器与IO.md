@@ -7,13 +7,10 @@
     
 ### SSD 与 HDD
 
-    Solid-state disk
+    SSD(Solid-state disk)：SLC(Single-Level Cell)、MLC、TLC、QLC    PE擦写    闪存转换层（FTL）    预留空间7-15%    写入放大   
+                        基于SSD的k-v数据库：AeroSpike
     
-    Hard Disk Drive
-    
-    SSD：SLC(Single-Level Cell)、MLC、TLC、QLC    PE擦写    闪存转换层（FTL）    预留空间7-15%    写入放大   
-    基于SSD的k-v数据库：AeroSpike
-                 
+    HDD(Hard Disk Drive)：
 
 ### 局部性原理与缓存
 ```

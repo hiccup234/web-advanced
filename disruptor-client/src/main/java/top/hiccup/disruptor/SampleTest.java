@@ -17,12 +17,12 @@ import java.util.concurrent.Executors;
  *
  * Created by wenhy on 2018/1/9.
  */
-public class Test {
+public class SampleTest {
 
     public static void main(String[] args) throws Exception {
         // 创建事件工厂
         EventFactory eventFactory = new MyEventFactory();
-        // 指定RingBuffer大小，最好是2的N次方，类似HashMap的capacity
+        // 指定RingBuffer大小，必须是2的N次方，类似HashMap的capacity（bufferSize must be a power of 2：Integer.bitCount）
         int ringBufferSize = 1024 * 1024;
 
         // 最低效的策略，但其对CPU的消耗最小并且在各种不同部署环境中能提供更加一致的性能表现。
@@ -38,7 +38,7 @@ public class Test {
 
         // 注册消费事件的处理器
         disruptor.handleEventsWith(new MyEventHandler(null));
-        disruptor.handleEventsWithWorkerPool(new MyWorkHandler());
+//        disruptor.handleEventsWithWorkerPool(new MyWorkHandler());
         // 启动Disruptor
         disruptor.start();
 
