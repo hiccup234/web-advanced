@@ -4,13 +4,10 @@ import com.lmax.disruptor.*;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
 import com.lmax.disruptor.util.DaemonThreadFactory;
-import top.hiccup.disruptor.common.*;
+import top.hiccup.disruptor.common.MyEvent;
+import top.hiccup.disruptor.common.MyEventFactory;
+import top.hiccup.disruptor.common.MyEventHandler;
 import top.hiccup.disruptor.perftest.Common;
-
-import java.nio.ByteBuffer;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * Disruptor简单使用示例
@@ -34,7 +31,7 @@ public class SampleTest {
 
         // TODO 优化点：创建事件能不能通过拷贝的方式呢？如果每次都new一个对象肯定很慢（创建Disruptor的时候就会用eventFactory填充整个循环队列）
         // 创建disruptor对象，ProducerType.SINGLE：只有一个生产者 ProducerType.MULTI：有多个生产者 TODO 单生产者其实性能更高（省去了线程切换）
-        Disruptor<MyEvent> disruptor = new Disruptor<MyEvent>(eventFactory, ringBufferSize, DaemonThreadFactory.INSTANCE, ProducerType.SINGLE, new YieldingWaitStrategy());
+        Disruptor<MyEvent> disruptor = new Disruptor<>(eventFactory, ringBufferSize, DaemonThreadFactory.INSTANCE, ProducerType.SINGLE, new YieldingWaitStrategy());
 
         // 注册消费事件的处理器
         disruptor.handleEventsWith(new MyEventHandler(null));
