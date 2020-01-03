@@ -11,7 +11,10 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * Created by wenhy on 2017/12/23.
+ * ZooKeeperClient
+ *
+ * @author wenhy
+ * @date 2017/12/23
  */
 public class ZooKeeperClient {
 

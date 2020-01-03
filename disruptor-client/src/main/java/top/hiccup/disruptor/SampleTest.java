@@ -20,7 +20,7 @@ public class SampleTest {
         // 创建事件工厂
         EventFactory eventFactory = new MyEventFactory();
         // 指定RingBuffer大小，必须是2的N次方，类似HashMap的capacity（bufferSize must be a power of 2：Integer.bitCount）
-        int ringBufferSize = 1024 * 1024;
+        int ringBufferSize = 32;
 
         // 最低效的策略，但其对CPU的消耗最小并且在各种不同部署环境中能提供更加一致的性能表现。
         WaitStrategy blockingWaitStrategy = new BlockingWaitStrategy();
@@ -30,8 +30,11 @@ public class SampleTest {
         WaitStrategy yieldingWaitStrategy = new YieldingWaitStrategy();
 
         // TODO 优化点：创建事件能不能通过拷贝的方式呢？如果每次都new一个对象肯定很慢（创建Disruptor的时候就会用eventFactory填充整个循环队列）
-        // 创建disruptor对象，ProducerType.SINGLE：只有一个生产者 ProducerType.MULTI：有多个生产者 TODO 单生产者其实性能更高（省去了线程切换）
-        Disruptor<MyEvent> disruptor = new Disruptor<>(eventFactory, ringBufferSize, DaemonThreadFactory.INSTANCE, ProducerType.SINGLE, new YieldingWaitStrategy());
+        // TODO 单生产者其实性能更高（省去了线程切换）
+        // 创建disruptor队列，ProducerType.SINGLE：单生产者；ProducerType.MULTI：多个生产者
+        Disruptor<MyEvent> disruptor = new Disruptor<>(eventFactory, ringBufferSize,
+                                                DaemonThreadFactory.INSTANCE, ProducerType.SINGLE, new YieldingWaitStrategy());
+//                                                DaemonThreadFactory.INSTANCE, ProducerType.SINGLE, new BlockingWaitStrategy());
 
         // 注册消费事件的处理器
         disruptor.handleEventsWith(new MyEventHandler(null));

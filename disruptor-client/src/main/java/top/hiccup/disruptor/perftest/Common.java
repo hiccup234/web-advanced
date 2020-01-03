@@ -14,12 +14,12 @@ import java.util.concurrent.TimeUnit;
 public class Common {
 
     /**
-     * 数据量
+     * 数据量 600W
      */
     public static final int DATA_SIZE = 6_000_000;
 
     /**
-     * 队列长度
+     * 队列长度 = 32768
      */
     public static final int QUEUE_SIZE = 1 << 15;
 
@@ -28,7 +28,7 @@ public class Common {
      * @return
      */
     public static ExecutorService getExecutorService() {
-        return new ThreadPoolExecutor(2, 2, 60,
+        return new ThreadPoolExecutor(2, 20, 60,
                 TimeUnit.SECONDS, new ArrayBlockingQueue<>(1024),
                 new ThreadPoolExecutor.CallerRunsPolicy());
     }

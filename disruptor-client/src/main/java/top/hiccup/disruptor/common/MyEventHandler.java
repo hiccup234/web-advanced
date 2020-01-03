@@ -27,8 +27,11 @@ public class MyEventHandler implements EventHandler<MyEvent> {
      */
     @Override
     public void onEvent(MyEvent myEvent, long sequence, boolean endOfBatch) throws Exception {
-        System.out.println("接收到：" + myEvent.getEventName());
+        // TODO 小插曲，这里打印到控制台会非常影响队列的性能测试结果
+//        System.out.print(" " + myEvent.getEventId());
+
         if (myEvent.getEventId() == Common.DATA_SIZE) {
+            // 消费完成后打印
             long costTime = System.currentTimeMillis() - PerfDisruptorTest.startTime;
             System.out.println("Disruptor耗时：" + costTime);
             long opsPerSecond = (Common.DATA_SIZE * 1000L) / costTime;
