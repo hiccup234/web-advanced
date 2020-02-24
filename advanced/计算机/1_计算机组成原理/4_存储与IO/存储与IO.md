@@ -55,12 +55,12 @@
         iotop: 查看IO占用高的进程
       
         stress -i 2 : 模拟IO压力
-    2、普通机械硬盘IOPS(随机访问)只有100左右，SSD的IOPS能达到2W左右
+    2、普通机械硬盘IOPS(随机访问)只有100左右，SSD的IOPS能达到2W甚至4W
             机械硬盘随机访问时间 =  平均延时 + 寻道时间
             2000-2010这10年间，谷歌通过Partial Stroking技术（减少寻道时间，但磁盘可以空间会变小）来提升IOPS，
             从而支撑起互联网的蓬勃发展
         
-### DMA
+### DMA（Direct Memory Access）
     IO设备的升级，HDD -> SSD 、SATA SSD -> PCI Express SSD，使得SSD的IOPS达到2W、4W等（SSD不能经常做磁盘碎片整理）（磨损均衡FTL、TRIM、写入放大）
     但CPU主频2GHz，即每秒20亿次操作，跟IO设备仍然有巨大差距。
     DMA是一个协处理器。
