@@ -29,7 +29,7 @@ public class SampleTest {
         // 性能最好，适合用于低延迟的系统。适合性能要求极高且事件处理线程数小于CPU逻辑核心数的场景，如CPU开启超线程特性。
         WaitStrategy yieldingWaitStrategy = new YieldingWaitStrategy();
 
-        // TODO 优化点：创建事件能不能通过拷贝的方式呢？如果每次都new一个对象肯定很慢（创建Disruptor的时候就会用eventFactory填充整个循环队列）
+        // TODO 优化点：创建事件能不能通过拷贝的方式呢？（创建Disruptor的时候就会用eventFactory填充整个循环队列）
         // TODO 单生产者其实性能更高（省去了线程切换）
         // 创建disruptor队列，ProducerType.SINGLE：单生产者；ProducerType.MULTI：多个生产者
         Disruptor<MyEvent> disruptor = new Disruptor<>(eventFactory, ringBufferSize,
