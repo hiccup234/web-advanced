@@ -69,6 +69,23 @@
     Kafka利用DMA来实现零拷贝，调用Java NIO库的FileChannel的transferTo方法，直接在硬盘的读缓冲区和网卡的缓冲区交换数据，
     即数据交换都在内核态，没有内核态和用户态的数据拷贝，大约有65%的性能提升。
     
+### 零拷贝（Zero-Copy） https://developer.ibm.com/articles/j-zerocopy/
+    Kafka里有两种常见的海量数据传输
+        1、从网络中接收上游数据，然后落盘到本地磁盘中持久化
+        2、从本地磁盘读取数据，然后通过网络发送出去
+        
+    下面代码包括了四次传输（文件读写是由操作系统内核态完成）
+    ByteBuf buf = new ByteBuf();
+    File.read(file, buf, len);      // 1、从硬盘通过DMA读取到操作系统内核的缓冲区中 2、从内核缓冲区复制到程序内存中（buf）
+    Socket.send(socket, buf, len);  // 3、从程序内存中复制到操作系统的Socket的缓冲区中 4、从Socket缓冲区复制到网卡缓冲区再发送出去（DMA方式）
+    
+    // 零拷贝   
+    public long transferFrom(FileChannel fileChannel, long position, long count) throws IOException {
+        return fileChannel.transferTo(position, count, socketChannel);
+    }
+    
+    Nginx可以通过配置sendfile的开关on/off来控制以zero-copy运行
+    
 ### 单比特反转
     硬件层面有时候也会出现错误，如内存的质量问题引起漏电，外部射线的电磁干扰等，从而引起单比特反转，解决方案有：
     1、奇偶校验，用额外的一个比特位来记录数据中1的个数是奇数个还是偶数个，即校验码位。
