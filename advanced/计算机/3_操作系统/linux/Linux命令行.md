@@ -122,7 +122,6 @@ Ctrl+c按键    让当前的程序停掉
     也可以直接grep icmp_seq=190 ping.log
 
 
-
 #### Linux中一切皆文件，每个文件Linux都会分配一个文件描述符（File Descriptor），fd是一个整数。
 
 ### time命令行可以统计程序的运行时间
