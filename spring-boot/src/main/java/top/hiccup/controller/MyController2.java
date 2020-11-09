@@ -15,9 +15,9 @@ import javax.annotation.PreDestroy;
  * @date 2019/6/25
  */
 @RestController
-public class MyController implements ApplicationListener<ContextClosedEvent>, DisposableBean {
+public class MyController2 implements ApplicationListener<ContextClosedEvent>, DisposableBean {
 
-    @RequestMapping("/")
+    @RequestMapping("/hello2")
     public String hello(){
         return "hello world!";
     }
@@ -25,16 +25,16 @@ public class MyController implements ApplicationListener<ContextClosedEvent>, Di
 
     @Override
     public void onApplicationEvent(ContextClosedEvent event) {
-        System.out.println("ContextClosedEvent");
+        System.out.println("ContextClosedEvent222");
     }
 
     @PreDestroy
     public void shutdown() {
-        System.out.println("shutdown");
+        System.out.println("shutdown222");
     }
 
     @Override
     public void destroy() throws Exception {
-        System.out.println("destroy");
+        System.out.println("destroy222");
     }
 }
