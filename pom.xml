@@ -16,6 +16,7 @@
         <module>ratel-boot</module>
         <module>dubbo-consumer</module>
         <module>dubbo-provider</module>
+        <module>spring-state</module>
     </modules>
 
     <build>
