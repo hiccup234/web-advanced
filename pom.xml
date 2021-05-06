@@ -17,6 +17,7 @@
         <module>dubbo-consumer</module>
         <module>dubbo-provider</module>
         <module>spring-state</module>
+        <module>configFile</module>
     </modules>
 
     <build>
