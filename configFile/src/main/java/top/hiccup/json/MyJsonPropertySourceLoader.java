@@ -34,6 +34,7 @@ public class MyJsonPropertySourceLoader implements PropertySourceLoader {
         while ((line = reader.readLine()) != null) {
             sb.append(line);
         }
+        // 这里只是做了简单解析，没有做嵌套配置的解析
         JSONObject json = JSONObject.parseObject(sb.toString());
         List<PropertySource<?>> propertySources = new ArrayList<>();
         MapPropertySource mapPropertySource = new MapPropertySource(resource.getFilename(), json);
