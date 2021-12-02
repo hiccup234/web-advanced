@@ -15,12 +15,10 @@ import top.hiccup.json.Custom;
 public class BootTest {
 
     public static void main(String[] args) {
-
         ConfigurableApplicationContext ctx = SpringApplication.run(BootTest.class, args);
         Custom custom = ctx.getBean(Custom.class);
-        System.out.println("\n\n");
+        System.out.println("\n");
         System.out.println(custom.name);
         System.out.println(custom.age);
-
     }
 }

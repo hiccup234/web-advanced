@@ -2,6 +2,7 @@ package top.hiccup.boot;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * 服务主入口
@@ -9,17 +10,18 @@ import org.slf4j.LoggerFactory;
  * @author wenhy
  * @date 2019/6/5
  */
-public class Main {
+@SpringBootApplication(scanBasePackageClasses = MainApplication.class)
+public class MainApplication {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MainApplication.class);
 
     private Bootstrap bootstrap;
 
     public static void main(String[] args) {
-        Main main = new Main();
+        MainApplication main = new MainApplication();
         Runtime.getRuntime().addShutdownHook(new Thread(main::shutdown));
         try {
-
+            main.startup();
         } catch (Throwable e) {
             LOGGER.error("Server startup failed", e);
             throw new RuntimeException(e);
